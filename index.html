@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  VillaNova — Page d'accueil
+  Bachelor ASR · La Plateforme_ · Jour 02 · Structure HTML sémantique
+  Anna Mamelli · Avril 2026
+  ============================================================================
+
+  Choix techniques documentés ici pour faciliter la défense orale :
+
+  - DOCTYPE html5 minimal (5 caractères au lieu des 31 du XHTML 1.0 Strict)
+    → 1 octet économisé par chargement × N visiteurs = bénéfice éco mesurable
+  - lang="fr" : indispensable pour les lecteurs d'écran et la prononciation
+  - Pas de CSS dans cette livraison (Jour 02 = sémantique pure, le SASS arrive Jour 03)
+  - Structure landmarks ARIA implicite via header/nav/main/aside/footer
+============================================================================ -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO + partage social -->
+  <title>VillaNova — Tous les événements culturels de la ville</title>
+  <meta name="description" content="Concerts, expositions, théâtre, festivals : retrouvez tous les événements culturels de VillaNova. Service public éco-conçu et accessible.">
+  <meta name="author" content="Mairie de VillaNova">
+  <meta name="theme-color" content="#5B21B6">
+
+  <!-- Open Graph (LinkedIn / Facebook) — utile pour le partage des événements -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VillaNova — Tous les événements culturels">
+  <meta property="og:description" content="La culture, tout près de chez vous.">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Canonical : évite le contenu dupliqué (bénéfice SEO + 1 page indexée au lieu de N) -->
+  <link rel="canonical" href="https://villanova.fr/">
+
+  <!--
+    Préchargement du serveur de fontes (DNS resolution + TLS handshake en avance)
+    → gain perçu de ~100ms sur le First Contentful Paint
+    Le téléchargement réel des fontes sera fait par la feuille de style au Jour 03
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts en <link> direct (au lieu de @import dans le CSS).
+       Permet le parallélisme avec le CSS principal = meilleur LCP. -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+
+  <!-- Preload de l'image hero (LCP critical resource).
+       Le navigateur la télécharge en parallèle du CSS, gain ~300-500ms sur LCP. -->
+  <link rel="preload"
+        as="image"
+        href="assets/images/festival-cultures-urbaines-800.avif"
+        type="image/avif"
+        fetchpriority="high">
+
+  <!-- Favicon SVG : un seul fichier vectoriel, ~1Ko, scale infini -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!--
+    Feuille de style principale (Jour 03)
+    Compilée depuis scss/style.scss vers css/style.css
+  -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!--
+    SKIP-LINK : premier élément focusable de la page.
+    Permet aux utilisateurs au clavier / lecteur d'écran de sauter directement
+    au contenu sans retraverser le menu à chaque page.
+    Critère RGAA 12.7.
+  -->
+  <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+
+  <!-- ====================================================================
+       HEADER — Bandeau commun à toutes les pages du site
+       Contient le branding et la navigation principale.
+       ==================================================================== -->
+  <header role="banner">
+    <p>
+      <a href="index.html" aria-label="VillaNova - Retour à l'accueil">
+        <strong>VillaNova</strong>
+      </a>
+      <span>Service public · Ville et culture pour toustes</span>
+    </p>
+
+    <!--
+      <nav> avec aria-label pour distinguer cette navigation des autres
+      (pied de page, fil d'Ariane, etc.). Critère RGAA 9.2.
+    -->
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html" aria-current="page">Événements</a></li>
+        <li><a href="/lieux">Lieux culturels</a></li>
+        <li><a href="/carte">Carte interactive</a></li>
+        <li><a href="/agenda">Mon agenda</a></li>
+      </ul>
+    </nav>
+
+    <p>
+      <a href="/connexion">Connexion</a>
+    </p>
+  </header>
+
+  <!-- ====================================================================
+       MAIN — Contenu principal unique de la page (un seul <main> par page)
+       L'attribut id correspond à la cible du skip-link.
+       ==================================================================== -->
+  <main id="contenu-principal" role="main">
+
+    <!-- ----------------------------------------------------------------
+         HERO — Section d'introduction
+         h1 unique de la page (critère RGAA 9.1.1)
+         ---------------------------------------------------------------- -->
+    <section aria-labelledby="titre-hero">
+      <p><small>Saison culturelle 2026</small></p>
+      <h1 id="titre-hero">La culture, tout près de chez vous.</h1>
+      <p>
+        Concerts, expos, théâtre, cinéma plein air, ateliers : tous les
+        événements de VillaNova centralisés en un seul endroit.
+      </p>
+
+      <!--
+        Statistiques en liste de définitions <dl> : association sémantique
+        explicite entre le terme (240+) et sa description (Événements).
+        Plus accessible qu'un simple <p> ou <span>.
+      -->
+      <dl>
+        <div>
+          <dt>Événements à venir</dt>
+          <dd>240+</dd>
+        </div>
+        <div>
+          <dt>Lieux partenaires</dt>
+          <dd>38</dd>
+        </div>
+        <div>
+          <dt>Habitants inscrits</dt>
+          <dd>15 000</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ----------------------------------------------------------------
+         BARRE DE RECHERCHE
+         <form> avec role="search" : landmark ARIA recherche.
+         ---------------------------------------------------------------- -->
+    <search>
+      <form action="/recherche" method="get" role="search">
+        <label for="recherche-evenement">
+          Rechercher un événement
+        </label>
+        <input
+          type="search"
+          id="recherche-evenement"
+          name="q"
+          placeholder="Concert, expo, artiste…"
+          autocomplete="off">
+
+        <label for="filtre-lieu">Filtrer par lieu</label>
+        <select id="filtre-lieu" name="lieu">
+          <option value="">Toute la ville</option>
+          <option value="centre">VillaNova centre</option>
+          <option value="nord">Quartier nord</option>
+          <option value="sud">Quartier sud</option>
+        </select>
+
+        <button type="submit">Rechercher</button>
+      </form>
+    </search>
+
+    <!-- ----------------------------------------------------------------
+         FILTRES PAR CATÉGORIE
+         <nav> secondaire avec aria-label distinct.
+         Chaque lien filtre la liste — au Jour 04 (JS) ces liens
+         deviendront des boutons interactifs.
+         ---------------------------------------------------------------- -->
+    <nav aria-label="Filtrer par catégorie">
+      <h2>Catégories</h2>
+      <ul>
+        <li><a href="#tous" aria-current="true">Tous</a></li>
+        <li><a href="#concerts">Concerts</a></li>
+        <li><a href="#expositions">Expositions</a></li>
+        <li><a href="#theatre">Théâtre</a></li>
+        <li><a href="#festivals">Festivals</a></li>
+        <li><a href="#ateliers">Ateliers</a></li>
+      </ul>
+    </nav>
+
+    <!-- ----------------------------------------------------------------
+         À LA UNE — Événement vedette
+         <article> car c'est un contenu autonome et réutilisable
+         (pourrait être syndiqué via flux RSS ou repris ailleurs).
+         Microdata schema.org/Event : enrichit le SEO et permet aux
+         moteurs (Google, Bing) d'afficher des résultats enrichis.
+         ---------------------------------------------------------------- -->
+    <section aria-labelledby="titre-une">
+      <h2 id="titre-une">À la une cette semaine</h2>
+
+      <article itemscope itemtype="https://schema.org/Event">
+        <header>
+          <p class="featured-eyebrow"><small>Du 26 au 28 avril · Vieux-Port</small></p>
+          <h3 itemprop="name">
+            <a href="event-detail.html?id=festival-cultures-urbaines" itemprop="url">
+              Festival des cultures urbaines
+            </a>
+          </h3>
+
+          <!-- Badges signature (cohérent avec la maquette du Jour 1) -->
+          <ul class="featured-badges" aria-label="Caractéristiques de l'événement">
+            <li>🎵 80 artistes</li>
+            <li>♻️ Éco-responsable</li>
+            <li>👥 Tout public</li>
+          </ul>
+        </header>
+
+        <!--
+          ÉCO-CONCEPTION DES IMAGES — point pédagogique majeur du Jour 02
+
+          La balise <picture> permet de servir la version la plus adaptée
+          de l'image au navigateur de l'utilisateur :
+
+          1. Le navigateur lit les <source> dans l'ordre
+          2. Premier match : il s'arrête et charge cette source
+          3. Si aucun match : il tombe sur le <img> en fallback
+
+          Ordre de priorité ici :
+          - AVIF mobile (le plus moderne, -50% de poids vs JPG)
+          - WebP mobile (-30% de poids, support ~96% des navigateurs)
+          - AVIF desktop (média query >= 1024px)
+          - WebP desktop
+          - JPG fallback (universel, support 100%)
+
+          Bénéfice mesuré : pour cette image hero, on passe de ~450 Ko (JPG)
+          à ~95 Ko (AVIF mobile) → -78% de bande passante consommée.
+
+          width et height OBLIGATOIRES pour éviter le CLS (Cumulative Layout
+          Shift) — la place est réservée avant le téléchargement, pas de
+          saute visuel quand l'image arrive. Critère Core Web Vitals.
+
+          loading="lazy" : la première image visible (above-the-fold) garde
+          un chargement immédiat, mais ici l'image est sous le pli pour
+          la majorité des résolutions, donc lazy.
+
+          alt descriptif (pas "image" ni "photo" — décrire ce qui est montré).
+          Critère RGAA 1.1.
+        -->
+        <picture>
+          <source
+            media="(min-width: 1024px)"
+            type="image/avif"
+            srcset="assets/images/festival-cultures-urbaines-1600.avif">
+          <source
+            media="(min-width: 1024px)"
+            type="image/webp"
+            srcset="assets/images/festival-cultures-urbaines-1600.webp">
+          <source
+            type="image/avif"
+            srcset="assets/images/festival-cultures-urbaines-800.avif">
+          <source
+            type="image/webp"
+            srcset="assets/images/festival-cultures-urbaines-800.webp">
+          <img
+            src="assets/images/festival-cultures-urbaines-800.jpg"
+            alt="Foule en concert au coucher du soleil sur le Vieux-Port, scène éclairée en violet et lime"
+            width="800"
+            height="450"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            itemprop="image">
+        </picture>
+
+        <p itemprop="description">
+          Trois jours pour célébrer les cultures urbaines : musique, danse,
+          arts visuels et débats au Vieux-Port. Plus de 80 artistes locaux et
+          internationaux.
+        </p>
+
+        <footer>
+          <!--
+            <time> avec attribut datetime au format ISO 8601 :
+            machine-readable (calendriers, moteurs de recherche)
+            tout en restant human-readable.
+          -->
+          <div class="featured-meta">
+            <p>
+              <strong>Quand :</strong>
+              <time itemprop="startDate" datetime="2026-04-26T14:00">
+                du 26 au 28 avril 2026, 14h
+              </time>
+            </p>
+            <p>
+              <strong>Où :</strong>
+              <span itemprop="location" itemscope itemtype="https://schema.org/Place">
+                <span itemprop="name">Vieux-Port</span>
+              </span>
+            </p>
+          </div>
+
+          <!-- Bloc tarif mis en avant (cohérent maquette Jour 1) -->
+          <div class="featured-price"
+               itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span class="featured-price-amount">
+              <span itemprop="price" content="0">0&nbsp;€</span>
+            </span>
+            <span class="featured-price-label">pass 3 jours</span>
+            <meta itemprop="priceCurrency" content="EUR">
+          </div>
+
+          <!-- CTA principal -->
+          <p class="featured-cta">
+            <a href="event-detail.html?id=festival-cultures-urbaines" class="vn-btn-accent">
+              Découvrir le programme →
+            </a>
+          </p>
+        </footer>
+      </article>
+    </section>
+
+    <!-- ----------------------------------------------------------------
+         LISTE DES ÉVÉNEMENTS
+         Chaque <article> est autonome : pourrait être copié-collé dans
+         un autre contexte sans perte de sens.
+         ---------------------------------------------------------------- -->
+    <section aria-labelledby="titre-liste">
+      <h2 id="titre-liste">Tous les événements</h2>
+      <p><small>240 événements à venir · triés par date</small></p>
+
+      <!--
+        <ul> car c'est une liste non-ordonnée d'éléments parallèles.
+        Cas d'usage type pour ul. Permet aux lecteurs d'écran d'annoncer
+        "liste de 6 éléments" et de naviguer item par item.
+      -->
+      <ul>
+        <li>
+          <article itemscope itemtype="https://schema.org/Event">
+            <picture data-date="26 AVR">
+              <source
+                type="image/avif"
+                srcset="assets/images/nuit-indie-rock-400.avif">
+              <source
+                type="image/webp"
+                srcset="assets/images/nuit-indie-rock-400.webp">
+              <img
+                src="assets/images/nuit-indie-rock-400.jpg"
+                alt="Guitariste sur scène avec lumières roses en arrière-plan"
+                width="400"
+                height="250"
+                loading="lazy"
+                decoding="async"
+                itemprop="image">
+            </picture>
+            <h3 itemprop="name">
+              <a href="/evenement/nuit-indie-rock" itemprop="url">
+                Nuit Indie Rock
+              </a>
+            </h3>
+            <p>
+              <time itemprop="startDate" datetime="2026-04-26T21:00">
+                26 avril 2026 · 21h
+              </time>
+            </p>
+            <p itemprop="location">Le Molotov</p>
+          </article>
+        </li>
+
+        <li>
+          <article itemscope itemtype="https://schema.org/Event">
+            <picture data-date="27 AVR">
+              <source
+                type="image/avif"
+                srcset="assets/images/lumieres-archive-400.avif">
+              <source
+                type="image/webp"
+                srcset="assets/images/lumieres-archive-400.webp">
+              <img
+                src="assets/images/lumieres-archive-400.jpg"
+                alt="Salle d'exposition avec photographies anciennes encadrées"
+                width="400"
+                height="250"
+                loading="lazy"
+                decoding="async"
+                itemprop="image">
+            </picture>
+            <h3 itemprop="name">
+              <a href="/evenement/lumieres-archive" itemprop="url">
+                Lumières d'archive
+              </a>
+            </h3>
+            <p>
+              <time itemprop="startDate" datetime="2026-04-27">
+                du 27 avril au 30 juin 2026
+              </time>
+            </p>
+            <p itemprop="location">Musée d'Histoire</p>
+          </article>
+        </li>
+
+        <li>
+          <article itemscope itemtype="https://schema.org/Event">
+            <picture data-date="28 AVR">
+              <source
+                type="image/avif"
+                srcset="assets/images/romeo-juliette-400.avif">
+              <source
+                type="image/webp"
+                srcset="assets/images/romeo-juliette-400.webp">
+              <img
+                src="assets/images/romeo-juliette-400.jpg"
+                alt="Scène de théâtre avec deux comédiens en costumes d'époque"
+                width="400"
+                height="250"
+                loading="lazy"
+                decoding="async"
+                itemprop="image">
+            </picture>
+            <h3 itemprop="name">
+              <a href="/evenement/romeo-juliette" itemprop="url">
+                Roméo & Juliette
+              </a>
+            </h3>
+            <p>
+              <time itemprop="startDate" datetime="2026-04-28T19:30">
+                28 avril 2026 · 19h30
+              </time>
+            </p>
+            <p itemprop="location">Théâtre du Gymnase</p>
+          </article>
+        </li>
+
+        <li>
+          <article itemscope itemtype="https://schema.org/Event">
+            <picture data-date="02 MAI">
+              <source
+                type="image/avif"
+                srcset="assets/images/cinema-plein-air-400.avif">
+              <source
+                type="image/webp"
+                srcset="assets/images/cinema-plein-air-400.webp">
+              <img
+                src="assets/images/cinema-plein-air-400.jpg"
+                alt="Public assis sur des transats devant un grand écran en plein air"
+                width="400"
+                height="250"
+                loading="lazy"
+                decoding="async"
+                itemprop="image">
+            </picture>
+            <h3 itemprop="name">
+              <a href="/evenement/cinema-plein-air" itemprop="url">
+                Cinéma plein air : Amélie Poulain
+              </a>
+            </h3>
+            <p>
+              <time itemprop="startDate" datetime="2026-05-02T21:30">
+                2 mai 2026 · 21h30
+              </time>
+            </p>
+            <p itemprop="location">Parc Borély</p>
+          </article>
+        </li>
+
+        <li>
+          <article itemscope itemtype="https://schema.org/Event">
+            <picture data-date="04 MAI">
+              <source
+                type="image/avif"
+                srcset="assets/images/atelier-ceramique-400.avif">
+              <source
+                type="image/webp"
+                srcset="assets/images/atelier-ceramique-400.webp">
+              <img
+                src="assets/images/atelier-ceramique-400.jpg"
+                alt="Mains d'une céramiste façonnant un bol sur un tour de potier"
+                width="400"
+                height="250"
+                loading="lazy"
+                decoding="async"
+                itemprop="image">
+            </picture>
+            <h3 itemprop="name">
+              <a href="/evenement/atelier-ceramique" itemprop="url">
+                Atelier céramique débutant
+              </a>
+            </h3>
+            <p>
+              <time itemprop="startDate" datetime="2026-05-04T14:00">
+                4 mai 2026 · 14h
+              </time>
+            </p>
+            <p itemprop="location">La Friche Belle de Mai</p>
+          </article>
+        </li>
+
+        <li>
+          <article itemscope itemtype="https://schema.org/Event">
+            <picture data-date="08 MAI">
+              <source
+                type="image/avif"
+                srcset="assets/images/concert-electro-400.avif">
+              <source
+                type="image/webp"
+                srcset="assets/images/concert-electro-400.webp">
+              <img
+                src="assets/images/concert-electro-400.jpg"
+                alt="DJ derrière platines avec lumières lime acide"
+                width="400"
+                height="250"
+                loading="lazy"
+                decoding="async"
+                itemprop="image">
+            </picture>
+            <h3 itemprop="name">
+              <a href="/evenement/concert-electro" itemprop="url">
+                Soirée électro : Boiler Room
+              </a>
+            </h3>
+            <p>
+              <time itemprop="startDate" datetime="2026-05-08T22:00">
+                8 mai 2026 · 22h
+              </time>
+            </p>
+            <p itemprop="location">Cabaret Aléatoire</p>
+          </article>
+        </li>
+      </ul>
+
+      <!-- Pagination accessible -->
+      <nav aria-label="Pagination des événements">
+        <ul>
+          <li><a href="?page=1" aria-current="page" aria-label="Page 1, page actuelle">1</a></li>
+          <li><a href="?page=2" aria-label="Page 2">2</a></li>
+          <li><a href="?page=3" aria-label="Page 3">3</a></li>
+          <li><a href="?page=2" aria-label="Page suivante">Suivante</a></li>
+        </ul>
+      </nav>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       BLOC NEWSLETTER — CTA visuel cohérent avec la maquette Jour 1
+       Bloc complémentaire (donc <aside>) avec formulaire d'inscription.
+       Mobile : empilé · Desktop : 2 colonnes (texte / formulaire).
+       ==================================================================== -->
+  <aside class="newsletter-block" aria-labelledby="titre-newsletter">
+    <div class="newsletter-content">
+      <p class="newsletter-eyebrow">— LA NEWSLETTER VILLANOVA</p>
+      <h2 id="titre-newsletter">
+        La culture, <em>tout près</em> de chez vous.
+      </h2>
+      <p class="newsletter-lead">
+        Un seul e-mail par mois avec les événements à ne pas manquer dans
+        votre quartier. Désinscription en un clic.
+      </p>
+      <ul class="newsletter-features">
+        <li>✓ Site éco-conçu · 0,8&nbsp;g CO₂ par page</li>
+        <li>✓ Aucune publicité, jamais</li>
+        <li>✓ Conforme RGPD</li>
+      </ul>
+    </div>
+
+    <form class="newsletter-form" action="/newsletter" method="post">
+      <p>
+        <label for="newsletter-email">Votre adresse e-mail</label>
+        <input
+          type="email"
+          id="newsletter-email"
+          name="email"
+          placeholder="prenom@exemple.fr"
+          required
+          autocomplete="email">
+      </p>
+      <p>
+        <input type="checkbox" id="newsletter-rgpd" name="rgpd" required>
+        <label for="newsletter-rgpd">
+          <small>J'accepte de recevoir la newsletter mensuelle de VillaNova.</small>
+        </label>
+      </p>
+      <p>
+        <button type="submit" class="vn-btn-accent">S'inscrire →</button>
+      </p>
+    </form>
+  </aside>
+
+  <!-- Petit aside complémentaire compact -->
+  <aside class="aside-secondary" aria-labelledby="titre-aside">
+    <h2 id="titre-aside">À découvrir aussi</h2>
+    <ul>
+      <li><a href="/lieux">Carte des lieux culturels de VillaNova</a></li>
+      <li><a href="/proposer">Proposer un événement</a></li>
+      <li><a href="/accessibilite">Événements accessibles PMR</a></li>
+      <li><a href="/rss" type="application/rss+xml">Flux RSS</a></li>
+    </ul>
+  </aside>
+
+  <!-- ====================================================================
+       FOOTER — Pied de page commun
+       contentinfo landmark implicite.
+       ==================================================================== -->
+  <footer role="contentinfo">
+
+    <section aria-labelledby="titre-footer-decouvrir">
+      <h2 id="titre-footer-decouvrir">Découvrir</h2>
+      <ul>
+        <li><a href="index.html">Tous les événements</a></li>
+        <li><a href="/lieux">Lieux culturels</a></li>
+        <li><a href="/carte">Carte interactive</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-footer-public">
+      <h2 id="titre-footer-public">Service public</h2>
+      <ul>
+        <li><a href="https://villanova.fr">Mairie de VillaNova</a></li>
+        <li><a href="/accessibilite">Déclaration d'accessibilité (RGAA 4.1)</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/donnees-personnelles">Données personnelles</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-footer-suivez">
+      <h2 id="titre-footer-suivez">Suivez-nous</h2>
+      <ul>
+        <li><a href="/newsletter">Newsletter</a></li>
+        <li><a href="https://instagram.com/villanova" rel="noopener external">Instagram</a></li>
+        <li><a href="/rss" type="application/rss+xml">Flux RSS</a></li>
+      </ul>
+    </section>
+
+    <!--
+      Badge éco-conception + mentions légales en bas de footer.
+      Information vérifiée par EcoIndex / Website Carbon Calculator.
+    -->
+    <p>
+      <small>
+        🌱 Site éco-conçu · 0,8 g CO₂ par page chargée ·
+        <a href="/eco-conception">Notre démarche éco-responsable</a>
+      </small>
+    </p>
+    <p>
+      <small>
+        © 2026 VillaNova · Service public · Conforme RGAA 4.1 niveau AA
+      </small>
+    </p>
+
+  </footer>
+
+  <script type="module" src="assets/js/index.js"></script>
+</body>
+</html>

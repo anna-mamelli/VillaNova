@@ -1,0 +1,336 @@
+// =============================================================================
+//  VillaNova · _layout.scss
+//  Architecture des grandes zones de la page : header, nav principale, main,
+//  aside, footer, et grille générale du contenu.
+// =============================================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+
+// -----------------------------------------------------------------------------
+//  HEADER PRINCIPAL DU SITE
+//  Mobile : empilé verticalement (logo → nav → connexion).
+//  Desktop ≥ md : flex horizontal avec nav au centre, connexion à droite.
+// -----------------------------------------------------------------------------
+
+body > header {
+  background: $vn-creme;
+  border-bottom: 2px solid $vn-violet-deep;
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xs;
+  padding: $space-sm;
+
+  @include respond-to('md') {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-lg;
+    padding: $space-sm $space-lg;
+  }
+
+  // Logo (premier <p> du header)
+  & > p:first-of-type {
+    margin: 0;
+
+    & > a {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-2xs;
+      text-decoration: none;
+      color: inherit;
+
+      strong {
+        font-family: $font-display;
+        font-size: $fs-xl;
+        font-weight: $fw-extrabold;
+        letter-spacing: -0.04em;
+        color: $vn-violet;
+
+        // Création du « .Nova » en rose : utilisation d'un pseudo-element
+        // serait possible, mais on garde simple ici (le HTML est sémantique
+        // strict, on stylise juste le strong en gardant la lisibilité)
+      }
+
+      &::before {
+        content: 'V';
+        display: grid;
+        place-items: center;
+        width: 2rem;
+        height: 2rem;
+        background: $vn-violet;
+        color: $vn-creme;
+        border-radius: $radius-sm;
+        font-family: $font-display;
+        font-weight: $fw-extrabold;
+        font-size: $fs-md;
+        position: relative;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0.5rem;
+        height: 0.5rem;
+        background: $vn-rose;
+        border-radius: $radius-pill;
+        transform: translate(-0.4rem, 1.3rem);
+      }
+    }
+
+    & > span {
+      display: none;  // Tagline cachée sur mobile
+
+      @include respond-to('lg') {
+        display: inline;
+        margin-left: $space-md;
+        font-size: $fs-xs;
+        color: $vn-text-muted;
+      }
+    }
+  }
+
+  // Bouton connexion
+  & > p:last-of-type a {
+    @include button-base;
+    background: $vn-blanc;
+    color: $vn-violet;
+    border-color: $vn-violet;
+    text-decoration: none;
+
+    &:hover {
+      background: $vn-violet;
+      color: $vn-creme;
+    }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  NAVIGATION PRINCIPALE (dans le header)
+// -----------------------------------------------------------------------------
+
+body > header > nav {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-sm;
+
+    @include respond-to('md') {
+      gap: $space-md;
+    }
+  }
+
+  a {
+    display: inline-block;
+    padding: $space-3xs $space-2xs;
+    color: $vn-text;
+    text-decoration: none;
+    font-weight: $fw-semibold;
+    font-size: $fs-sm;
+    position: relative;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $vn-rose;
+    }
+
+    // Indicateur de page courante : barre lime dessous (RGAA 10.6)
+    &[aria-current='page'] {
+      color: $vn-violet-deep;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: $vn-rose;
+        border-radius: $radius-pill;
+      }
+    }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  FIL D'ARIANE (uniquement sur fiche événement)
+// -----------------------------------------------------------------------------
+
+body > nav[aria-label="Fil d'Ariane"] {
+  @include container;
+  padding-top: $space-md;
+  padding-bottom: $space-2xs;
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3xs;
+    align-items: center;
+    font-size: $fs-sm;
+    color: $vn-text-muted;
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+
+    // Séparateur visuel entre les niveaux
+    & + li::before {
+      content: '/';
+      margin-inline: $space-2xs;
+      color: $vn-border-strong;
+      font-weight: $fw-bold;
+    }
+  }
+
+  a {
+    color: $vn-violet;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  [aria-current='page'] {
+    color: $vn-violet-deep;
+    font-weight: $fw-semibold;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  MAIN — Contenu principal
+//  Largeur max + padding horizontal cohérent.
+//  Sur fiche événement : grille 2 colonnes desktop (article + sticky aside)
+// -----------------------------------------------------------------------------
+
+main {
+  @include container;
+  padding-block: $space-md;
+
+  @include respond-to('md') {
+    padding-block: $space-xl;
+  }
+
+  // Espace régulier entre les sections
+  & > section,
+  & > article,
+  & > search,
+  & > nav {
+    margin-bottom: $space-xl;
+
+    @include respond-to('md') {
+      margin-bottom: $space-2xl;
+    }
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  ASIDE — Contenu complémentaire
+// -----------------------------------------------------------------------------
+
+body > aside {
+  @include container;
+  padding-block: $space-lg;
+  border-top: 2px solid $vn-border;
+
+  @include respond-to('md') {
+    padding-block: $space-xl;
+  }
+
+  ul {
+    display: grid;
+    gap: $space-2xs;
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $space-sm;
+    }
+  }
+
+  li {
+    padding: $space-2xs 0;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  FOOTER PRINCIPAL DU SITE
+// -----------------------------------------------------------------------------
+
+body > footer {
+  background: $vn-violet-deep;
+  color: $vn-creme;
+  padding: $space-xl $space-sm $space-md;
+
+  @include respond-to('md') {
+    padding: $space-2xl $space-lg $space-lg;
+  }
+
+  // Layout : empilé sur mobile, 3 colonnes en desktop
+  display: grid;
+  gap: $space-lg;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 75rem;
+    margin-inline: auto;
+  }
+
+  section {
+    h2 {
+      font-size: $fs-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: $vn-lime;
+      margin-bottom: $space-sm;
+      font-weight: $fw-bold;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: $space-2xs;
+    }
+
+    a {
+      color: $vn-creme;
+      opacity: 0.85;
+      text-decoration: none;
+      font-size: $fs-sm;
+
+      &:hover {
+        opacity: 1;
+        color: $vn-lime;
+      }
+
+      &:focus-visible {
+        outline-color: $vn-lime;
+      }
+    }
+  }
+
+  // Mentions légales (paragraphes en dehors des sections)
+  & > p {
+    grid-column: 1 / -1;  // Span toutes les colonnes
+    margin-top: $space-md;
+    padding-top: $space-md;
+    border-top: 1px solid rgba(196, 181, 253, 0.2);
+    font-size: $fs-xs;
+    opacity: 0.7;
+
+    a {
+      color: $vn-lime;
+      text-decoration: underline;
+    }
+  }
+}

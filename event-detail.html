@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  VillaNova — Fiche détaillée d'un événement
+  Bachelor ASR · La Plateforme_ · Jour 02 · Structure HTML sémantique
+  Anna Mamelli · Avril 2026
+  ============================================================================
+
+  Particularités de cette page (vs index.html) :
+  - Microdata schema.org/Event complète (date, lieu, prix, organisateur)
+  - <video> avec toutes les bonnes pratiques d'éco-conception
+  - Fil d'Ariane (breadcrumb) avec microdata BreadcrumbList
+  - Section "Programme" en <ol> (ordre chronologique signifiant)
+  - Bouton de partage et formulaire de réservation (form)
+  - Région "événements similaires" en aside
+============================================================================ -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Festival des cultures urbaines — VillaNova</title>
+  <meta name="description" content="Trois jours pour célébrer les cultures urbaines au Vieux-Port de VillaNova : musique, danse, arts visuels et débats. Du 26 au 28 avril 2026. Gratuit.">
+  <meta name="theme-color" content="#5B21B6">
+
+  <!--
+    Open Graph enrichi pour le partage social.
+    L'image og:image doit être présente — c'est ce qui s'affiche quand
+    quelqu'un partage le lien sur LinkedIn, Facebook, WhatsApp.
+  -->
+  <meta property="og:type" content="event">
+  <meta property="og:title" content="Festival des cultures urbaines">
+  <meta property="og:description" content="Du 26 au 28 avril 2026 au Vieux-Port. Entrée libre.">
+  <meta property="og:image" content="https://villanova.fr/assets/images/festival-cultures-urbaines-1200.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://villanova.fr/evenement/festival-cultures-urbaines">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="canonical" href="https://villanova.fr/evenement/festival-cultures-urbaines">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Google Fonts en <link> direct pour parallélisation -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!--
+    Feuille de style principale (Jour 03)
+    Compilée depuis scss/style.scss vers css/style.css
+  -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
+
+  <!-- ====================================================================
+       HEADER — Identique à l'index pour cohérence inter-pages
+       (À factoriser dans un partial Twig/Handlebars/include PHP)
+       ==================================================================== -->
+  <header role="banner">
+    <p>
+      <a href="index.html" aria-label="VillaNova - Retour à l'accueil">
+        <strong>VillaNova</strong>
+      </a>
+      <span>Service public · Ville et culture pour toustes</span>
+    </p>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Événements</a></li>
+        <li><a href="/lieux">Lieux culturels</a></li>
+        <li><a href="/carte">Carte interactive</a></li>
+        <li><a href="/agenda">Mon agenda</a></li>
+      </ul>
+    </nav>
+    <p>
+      <a href="/connexion">Connexion</a>
+    </p>
+  </header>
+
+  <!-- ====================================================================
+       FIL D'ARIANE
+       <nav> avec aria-label "Fil d'Ariane".
+       Microdata schema.org/BreadcrumbList → Google peut afficher
+       le fil d'Ariane directement dans les résultats de recherche.
+       ==================================================================== -->
+  <nav aria-label="Fil d'Ariane">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="index.html" itemprop="item">
+          <span itemprop="name">Accueil</span>
+        </a>
+        <meta itemprop="position" content="1">
+      </li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="/?categorie=festivals" itemprop="item">
+          <span itemprop="name">Festivals</span>
+        </a>
+        <meta itemprop="position" content="2">
+      </li>
+      <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span itemprop="name" aria-current="page">Festival des cultures urbaines</span>
+        <meta itemprop="position" content="3">
+      </li>
+    </ol>
+  </nav>
+
+  <!-- ====================================================================
+       MAIN — La fiche événement entière est un seul gros <article>
+       avec microdata schema.org/Event.
+
+       Pourquoi <article> et pas <section> ?
+       → Une fiche événement est un contenu autonome, syndicable
+       (export ICS, partage social, agrégation). C'est l'unité atomique
+       réutilisable. Texte : "événement, article de blog, produit…"
+       ==================================================================== -->
+  <main id="contenu-principal" role="main">
+
+    <article itemscope itemtype="https://schema.org/Event">
+
+      <!-- ----------------------------------------------------------------
+           HEADER de l'article (≠ header du site)
+           Un <header> peut exister à l'intérieur d'un <article> :
+           il regroupe l'introduction et les méta-infos de cet article.
+           ---------------------------------------------------------------- -->
+      <header>
+        <p><a href="index.html" rel="up">← Retour à la liste des événements</a></p>
+
+        <p>
+          <small>
+            <span itemprop="eventStatus" content="https://schema.org/EventScheduled">Festival</span>
+            ·
+            <span>Éco-responsable</span>
+            ·
+            <span>Tout public</span>
+          </small>
+        </p>
+
+        <h1 itemprop="name">Festival des cultures urbaines</h1>
+
+        <!--
+          IMAGE DE COUVERTURE — éco-conception complète
+
+          Particularité ici : l'image est en haut de page (above-the-fold),
+          donc loading="eager" (pas de lazy) car elle doit s'afficher tout
+          de suite. fetchpriority="high" indique au navigateur de la
+          télécharger en priorité absolue.
+
+          C'est l'inverse des images de la liste sur l'index : elles sont
+          sous le pli, donc lazy.
+        -->
+        <picture>
+          <source
+            media="(min-width: 1280px)"
+            type="image/avif"
+            srcset="assets/images/festival-cultures-urbaines-1920.avif">
+          <source
+            media="(min-width: 1280px)"
+            type="image/webp"
+            srcset="assets/images/festival-cultures-urbaines-1920.webp">
+          <source
+            media="(min-width: 768px)"
+            type="image/avif"
+            srcset="assets/images/festival-cultures-urbaines-1280.avif">
+          <source
+            media="(min-width: 768px)"
+            type="image/webp"
+            srcset="assets/images/festival-cultures-urbaines-1280.webp">
+          <source
+            type="image/avif"
+            srcset="assets/images/festival-cultures-urbaines-800.avif">
+          <source
+            type="image/webp"
+            srcset="assets/images/festival-cultures-urbaines-800.webp">
+          <img
+            src="assets/images/festival-cultures-urbaines-800.jpg"
+            alt="Vue d'ensemble du Vieux-Port au coucher du soleil avec scène principale, foule dansante et lumières roses et lime"
+            width="1920"
+            height="900"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            itemprop="image">
+        </picture>
+      </header>
+
+      <!-- ----------------------------------------------------------------
+           BOX RÉSERVATION STICKY (cohérent avec maquette Jour 1)
+           Wrap : <div class="event-grid"> englobe toutes les sections suivantes
+           pour créer un layout 2 colonnes sur desktop (contenu / box sticky).
+
+           Sur mobile : empilement vertical, box au-dessus.
+           Sur desktop ≥ md : grille 2 colonnes, box collée à droite (sticky).
+
+           Sémantique : <aside> car c'est complémentaire au contenu principal.
+           Le aria-label rend explicite la nature du bloc pour les lecteurs
+           d'écran.
+           ---------------------------------------------------------------- -->
+      <div class="event-grid">
+
+        <aside class="event-booking" aria-label="Réservation et informations clés">
+          <div class="booking-price"
+               itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span class="booking-price-amount">
+              <span itemprop="price" content="0">0&nbsp;€</span>
+            </span>
+            <span class="booking-price-label">pass 3 jours</span>
+            <meta itemprop="priceCurrency" content="EUR">
+            <meta itemprop="availability" content="https://schema.org/InStock">
+          </div>
+
+          <p class="booking-cta">
+            <a href="#titre-reservation" class="vn-btn-accent">
+              Réserver mon pass →
+            </a>
+          </p>
+
+          <p class="booking-secondary">
+            <a href="evenement/festival-cultures-urbaines.ics" download>
+              📅 Ajouter à mon calendrier
+            </a>
+          </p>
+
+          <hr class="booking-sep">
+
+          <ul class="booking-quickfacts">
+            <li>
+              <strong>📅 Dates</strong>
+              <span>3 → 5 juillet 2026</span>
+            </li>
+            <li>
+              <strong>🕐 Horaires</strong>
+              <span>14h — 23h</span>
+            </li>
+            <li>
+              <strong>📍 Lieu</strong>
+              <span>Vieux-Port, VillaNova</span>
+            </li>
+            <li>
+              <strong>♿ Accessibilité</strong>
+              <span>PMR · LSF samedi 14h</span>
+            </li>
+          </ul>
+        </aside>
+
+        <div class="event-content">
+
+      <!-- ----------------------------------------------------------------
+           BLOC INFOS PRATIQUES
+           Liste de définitions <dl> = associations sémantiques fortes
+           entre un terme (Date) et une valeur (du 26 au 28 avril 2026).
+           Plus accessible que des <p><strong>...</strong>:</p>
+           ---------------------------------------------------------------- -->
+      <section aria-labelledby="titre-infos">
+        <h2 id="titre-infos">Informations pratiques</h2>
+
+        <dl>
+          <dt>Dates</dt>
+          <dd>
+            <time itemprop="startDate" datetime="2026-04-26T14:00">
+              du 26 avril 2026 à 14h
+            </time>
+            au
+            <time itemprop="endDate" datetime="2026-04-28T23:00">
+              28 avril 2026 à 23h
+            </time>
+          </dd>
+
+          <dt>Horaires quotidiens</dt>
+          <dd>14h — 23h</dd>
+
+          <dt>Lieu</dt>
+          <dd itemprop="location" itemscope itemtype="https://schema.org/Place">
+            <span itemprop="name">Vieux-Port</span>,
+            <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+              <span itemprop="streetAddress">Quai des Belges</span>,
+              <span itemprop="postalCode">13001</span>
+              <span itemprop="addressLocality">VillaNova</span>
+            </span>
+            ·
+            <a href="/lieux/vieux-port">Voir sur la carte</a>
+          </dd>
+
+          <dt>Tarif</dt>
+          <dd itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span itemprop="price" content="0">Gratuit</span>
+            <meta itemprop="priceCurrency" content="EUR">
+            <meta itemprop="availability" content="https://schema.org/InStock">
+            <meta itemprop="url" content="https://villanova.fr/evenement/festival-cultures-urbaines">
+          </dd>
+
+          <dt>Organisateur</dt>
+          <dd itemprop="organizer" itemscope itemtype="https://schema.org/Organization">
+            <span itemprop="name">Mairie de VillaNova</span>
+            ·
+            <a href="https://villanova.fr" itemprop="url">villanova.fr</a>
+          </dd>
+
+          <dt>Accessibilité</dt>
+          <dd>Toutes les scènes sont accessibles aux personnes à mobilité réduite. Boucles magnétiques disponibles. Programme en LSF samedi 14h.</dd>
+        </dl>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           DESCRIPTION
+           Hiérarchie h1 → h2 → h3 stricte (pas de saut h1 → h3 !)
+           ---------------------------------------------------------------- -->
+      <section aria-labelledby="titre-description" itemprop="description">
+        <h2 id="titre-description">À propos du festival</h2>
+
+        <p>
+          Trois jours pour faire vibrer les <strong>cultures urbaines</strong>
+          au cœur du Vieux-Port : musique, danse, arts visuels, débats et
+          ateliers participatifs. Le festival rassemble plus de 80 artistes
+          locaux et internationaux pour une programmation pluridisciplinaire
+          qui célèbre l'énergie de la jeunesse de VillaNova.
+        </p>
+
+        <p>
+          Concerts hip-hop, battles de danse, fresques live, projections de
+          documentaires, conférences sur les enjeux urbains, ateliers de
+          DJing et de graffiti pour les jeunes — tout est gratuit, accessible,
+          et conçu pour favoriser les rencontres entre publics qui ne se
+          croisent pas habituellement.
+        </p>
+
+        <h3>Une démarche éco-responsable</h3>
+        <p>
+          Le festival s'inscrit dans la démarche éco-citoyenne de la ville :
+          éclairage LED basse consommation, gobelets consignés, partenariat
+          avec les transports en commun (gratuité du métro pour les festivaliers),
+          programme imprimé sur papier recyclé encre végétale, restauration
+          locale et bio.
+        </p>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           VIDÉO DE PRÉSENTATION — point pédagogique majeur du Jour 02
+
+           Toutes les bonnes pratiques d'éco-conception du brief sont
+           appliquées ici :
+
+           1. controls : l'utilisateur DOIT pouvoir lancer/arrêter
+              (RGAA 4.7 — pas de média qui démarre tout seul)
+           2. preload="metadata" : on charge UNIQUEMENT les métadonnées
+              (durée, dimensions, première frame) — pas la vidéo entière
+              tant que l'utilisateur n'a pas cliqué Play. Économie massive
+              de bande passante pour les visiteurs qui ne regarderont pas.
+           3. PAS d'autoplay : la vidéo ne démarre pas seule. Critère RGAA.
+           4. poster=… : image affichée tant que la vidéo n'est pas lancée.
+              Sans poster, le navigateur affiche un cadre noir vide moche.
+           5. Plusieurs <source> : WebM (libre, mieux compressé, moderne)
+              avant MP4 (universel, fallback). Le navigateur prend la
+              première qu'il sait lire.
+           6. <track kind="captions"> : sous-titres pour les sourds/
+              malentendants. Critère RGAA 4.1. Format VTT (WebVTT).
+           7. <track kind="descriptions"> : audiodescription pour les
+              personnes malvoyantes (description audio des scènes).
+           8. width/height pour réserver l'espace (anti-CLS).
+           9. <p> de fallback à l'intérieur du <video> : si le navigateur
+              ne supporte aucune source, l'utilisateur peut télécharger
+              le fichier et le lire dans son lecteur préféré.
+           ---------------------------------------------------------------- -->
+      <section aria-labelledby="titre-video">
+        <h2 id="titre-video">Vidéo de présentation</h2>
+        <p>
+          <small>Édition 2025 du festival · 2 minutes 15 · sous-titres disponibles</small>
+        </p>
+
+        <figure>
+          <video
+            controls
+            preload="metadata"
+            poster="assets/videos/festival-2025-poster.jpg"
+            width="1280"
+            height="720">
+
+            <!-- Format moderne en premier (priorité au libre + compression efficace) -->
+            <source
+              src="assets/videos/festival-2025.webm"
+              type="video/webm">
+
+            <!-- Fallback universel -->
+            <source
+              src="assets/videos/festival-2025.mp4"
+              type="video/mp4">
+
+            <!-- Sous-titres français (par défaut) -->
+            <track
+              kind="captions"
+              src="assets/videos/festival-2025-fr.vtt"
+              srclang="fr"
+              label="Français"
+              default>
+
+            <!-- Sous-titres anglais pour les visiteurs internationaux -->
+            <track
+              kind="captions"
+              src="assets/videos/festival-2025-en.vtt"
+              srclang="en"
+              label="English">
+
+            <!-- Audiodescription pour les personnes aveugles ou malvoyantes -->
+            <track
+              kind="descriptions"
+              src="assets/videos/festival-2025-ad-fr.vtt"
+              srclang="fr"
+              label="Audiodescription française">
+
+            <!--
+              Fallback ultime : si le navigateur ne supporte pas <video>,
+              il affichera ce paragraphe.
+            -->
+            <p>
+              Votre navigateur ne prend pas en charge la lecture vidéo.
+              Vous pouvez
+              <a href="assets/videos/festival-2025.mp4" download>
+                télécharger la vidéo (MP4, 52 Ko)
+              </a>
+              pour la lire avec votre lecteur préféré.
+            </p>
+          </video>
+
+          <!--
+            <figcaption> = légende sémantique de la <figure>.
+            Lue par les lecteurs d'écran après la vidéo.
+          -->
+          <figcaption>
+            Aftermovie de l'édition 2025 du Festival des cultures urbaines,
+            réalisé par le collectif <em>Studio Bricabrac</em>.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           PROGRAMME
+           <ol> = liste ordonnée. Ici l'ordre chronologique a du sens :
+           on commence à 14h, puis 16h, puis 19h…
+           Si on permutait l'ordre, l'information serait fausse.
+           ---------------------------------------------------------------- -->
+      <section aria-labelledby="titre-programme">
+        <h2 id="titre-programme">Programme</h2>
+
+        <h3>Vendredi 26 avril</h3>
+        <ol>
+          <li>
+            <time datetime="2026-04-26T14:00">14h</time> —
+            <strong>Ouverture officielle</strong>
+            <p>Accueil, présentation, fanfare urbaine.</p>
+          </li>
+          <li>
+            <time datetime="2026-04-26T16:00">16h</time> —
+            <strong>Battle de danse hip-hop</strong>
+            <p>Compétition ouverte, 16 crews, jury composé d'artistes locaux.</p>
+          </li>
+          <li>
+            <time datetime="2026-04-26T19:00">19h</time> —
+            <strong>Concert d'ouverture</strong>
+            <p>Tête d'affiche : <abbr title="Disc Jockey">DJ</abbr> Mehdi (set hommage).</p>
+          </li>
+          <li>
+            <time datetime="2026-04-26T22:00">22h</time> —
+            <strong>Soirée électro</strong>
+            <p>Plateau de 4 artistes émergents marseillais et lyonnais.</p>
+          </li>
+        </ol>
+
+        <h3>Samedi 27 avril</h3>
+        <ol>
+          <li>
+            <time datetime="2026-04-27T14:00">14h</time> —
+            <strong>Ateliers participatifs</strong>
+            <p>Graffiti, DJing, écriture rap, beatmaking. Tous niveaux. Visite guidée en LSF.</p>
+          </li>
+          <li>
+            <time datetime="2026-04-27T17:00">17h</time> —
+            <strong>Conférence : « Cultures urbaines et politiques publiques »</strong>
+            <p>Avec Marie Dubois (sociologue, Université d'Aix-Marseille) et le collectif <em>Hip-Hop Citoyen</em>.</p>
+          </li>
+          <li>
+            <time datetime="2026-04-27T20:00">20h</time> —
+            <strong>Concert principal</strong>
+            <p>4 groupes en plateau, tête d'affiche internationale annoncée prochainement.</p>
+          </li>
+        </ol>
+
+        <h3>Dimanche 28 avril</h3>
+        <ol>
+          <li>
+            <time datetime="2026-04-28T11:00">11h</time> —
+            <strong>Brunch musical en plein air</strong>
+            <p>DJ set chill, restauration locale et bio.</p>
+          </li>
+          <li>
+            <time datetime="2026-04-28T15:00">15h</time> —
+            <strong>Fresque collective live</strong>
+            <p>Réalisation d'une fresque géante sur le mur du quai par 12 artistes graffeurs.</p>
+          </li>
+          <li>
+            <time datetime="2026-04-28T19:00">19h</time> —
+            <strong>Clôture</strong>
+            <p>Concert de clôture, remise des prix de la battle, fin du festival à 23h.</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           RÉSERVATION
+           Bien que l'événement soit gratuit, on demande une inscription
+           pour anticiper les flux. <form> avec validation HTML5 native.
+           ---------------------------------------------------------------- -->
+      <section aria-labelledby="titre-reservation">
+        <h2 id="titre-reservation">Réserver ma place</h2>
+        <p>L'événement est gratuit mais l'inscription permet d'anticiper les flux et de recevoir le programme détaillé.</p>
+
+        <form action="/reservation" method="post">
+
+          <!--
+            Fieldset = regroupement sémantique de champs liés.
+            Legend = titre du regroupement, lu par les lecteurs d'écran.
+          -->
+          <fieldset>
+            <legend>Vos coordonnées</legend>
+
+            <p>
+              <label for="nom">Nom <abbr title="obligatoire">*</abbr></label>
+              <input type="text" id="nom" name="nom" required autocomplete="family-name">
+            </p>
+
+            <p>
+              <label for="prenom">Prénom <abbr title="obligatoire">*</abbr></label>
+              <input type="text" id="prenom" name="prenom" required autocomplete="given-name">
+            </p>
+
+            <p>
+              <label for="email">E-mail <abbr title="obligatoire">*</abbr></label>
+              <input type="email" id="email" name="email" required autocomplete="email">
+            </p>
+
+            <p>
+              <label for="telephone">Téléphone (facultatif)</label>
+              <input type="tel" id="telephone" name="telephone" autocomplete="tel">
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Jours de présence</legend>
+
+            <p>
+              <input type="checkbox" id="vendredi" name="jours" value="vendredi">
+              <label for="vendredi">Vendredi 3 juillet</label>
+            </p>
+            <p>
+              <input type="checkbox" id="samedi" name="jours" value="samedi">
+              <label for="samedi">Samedi 4 juillet</label>
+            </p>
+            <p>
+              <input type="checkbox" id="dimanche" name="jours" value="dimanche">
+              <label for="dimanche">Dimanche 5 juillet</label>
+            </p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Besoins d'accessibilité</legend>
+
+            <p>
+              <input type="checkbox" id="pmr" name="accessibilite" value="pmr">
+              <label for="pmr">Accès PMR (personne à mobilité réduite)</label>
+            </p>
+            <p>
+              <input type="checkbox" id="lsf" name="accessibilite" value="lsf">
+              <label for="lsf">Programme en LSF (Langue des Signes Française)</label>
+            </p>
+            <p>
+              <input type="checkbox" id="boucle" name="accessibilite" value="boucle-magnetique">
+              <label for="boucle">Boucle magnétique (malentendants)</label>
+            </p>
+          </fieldset>
+
+          <p>
+            <input type="checkbox" id="newsletter" name="newsletter" value="oui">
+            <label for="newsletter">Je souhaite recevoir la newsletter VillaNova (1 e-mail par mois maximum, désinscription à tout moment).</label>
+          </p>
+
+          <p>
+            <button type="submit">Confirmer mon inscription</button>
+          </p>
+
+          <p><small>Les données collectées sont utilisées uniquement pour la gestion de l'événement et conservées 6 mois après la date du festival. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression. <a href="/donnees-personnelles">En savoir plus</a>.</small></p>
+
+        </form>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           PARTAGE
+           Le bouton "Partager" est un <a> avec mailto: pour le mail,
+           href avec endpoint d'API pour les réseaux sociaux.
+           Pas de JavaScript requis — fonctionne sans JS (progressive
+           enhancement, important pour l'accessibilité).
+           ---------------------------------------------------------------- -->
+      <section aria-labelledby="titre-partage">
+        <h2 id="titre-partage">Partager cet événement</h2>
+        <ul>
+          <li>
+            <a
+              href="mailto:?subject=Festival%20des%20cultures%20urbaines&body=Je%20te%20conseille%20cet%20%C3%A9v%C3%A9nement%20%3A%20https%3A%2F%2Fvillanova.fr%2Fevenement%2Ffestival-cultures-urbaines"
+              rel="noopener">
+              Partager par e-mail
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fvillanova.fr%2Fevenement%2Ffestival-cultures-urbaines"
+              rel="noopener external"
+              target="_blank">
+              Partager sur LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="/evenement/festival-cultures-urbaines.ics" download>
+              Ajouter à mon calendrier (fichier .ics)
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ----------------------------------------------------------------
+           FOOTER de l'article
+           Méta-infos de bas d'article : date de publication, auteur,
+           catégories, dernière mise à jour.
+           ---------------------------------------------------------------- -->
+      <footer>
+        <p>
+          <small>
+            Publié le
+            <time datetime="2026-03-15">15 mars 2026</time>
+            par
+            <span itemprop="organizer" itemscope itemtype="https://schema.org/Organization">
+              <span itemprop="name">Mairie de VillaNova</span>
+            </span>
+            ·
+            Dernière mise à jour le
+            <time datetime="2026-04-20">20 avril 2026</time>
+          </small>
+        </p>
+      </footer>
+
+        </div><!-- /.event-content -->
+      </div><!-- /.event-grid -->
+
+    </article>
+
+  </main>
+
+  <!-- ====================================================================
+       ASIDE — Événements similaires
+       Position après <main> dans le DOM (et donc après dans l'arbre
+       d'accessibilité), même si visuellement le CSS pourra le placer
+       en sidebar à droite.
+       ==================================================================== -->
+  <aside aria-labelledby="titre-similaires">
+    <h2 id="titre-similaires">Vous aimerez aussi</h2>
+
+    <ul>
+      <li>
+        <article itemscope itemtype="https://schema.org/Event">
+          <picture data-date="08 MAI">
+            <source
+              type="image/avif"
+              srcset="assets/images/concert-electro-400.avif">
+            <source
+              type="image/webp"
+              srcset="assets/images/concert-electro-400.webp">
+            <img
+              src="assets/images/concert-electro-400.jpg"
+              alt="DJ derrière platines avec lumières lime acide"
+              width="400"
+              height="250"
+              loading="lazy"
+              decoding="async">
+          </picture>
+          <h3>
+            <a href="/evenement/concert-electro" itemprop="url">
+              <span itemprop="name">Soirée électro : Boiler Room</span>
+            </a>
+          </h3>
+          <p>
+            <time itemprop="startDate" datetime="2026-05-08T22:00">8 mai 2026 · 22h</time>
+            ·
+            <span itemprop="location">Cabaret Aléatoire</span>
+          </p>
+        </article>
+      </li>
+
+      <li>
+        <article itemscope itemtype="https://schema.org/Event">
+          <picture data-date="04 MAI">
+            <source
+              type="image/avif"
+              srcset="assets/images/atelier-ceramique-400.avif">
+            <source
+              type="image/webp"
+              srcset="assets/images/atelier-ceramique-400.webp">
+            <img
+              src="assets/images/atelier-ceramique-400.jpg"
+              alt="Mains d'une céramiste façonnant un bol sur un tour de potier"
+              width="400"
+              height="250"
+              loading="lazy"
+              decoding="async">
+          </picture>
+          <h3>
+            <a href="/evenement/atelier-ceramique" itemprop="url">
+              <span itemprop="name">Atelier céramique débutant</span>
+            </a>
+          </h3>
+          <p>
+            <time itemprop="startDate" datetime="2026-05-04T14:00">4 mai 2026 · 14h</time>
+            ·
+            <span itemprop="location">La Friche Belle de Mai</span>
+          </p>
+        </article>
+      </li>
+
+      <li>
+        <article itemscope itemtype="https://schema.org/Event">
+          <picture data-date="02 MAI">
+            <source
+              type="image/avif"
+              srcset="assets/images/cinema-plein-air-400.avif">
+            <source
+              type="image/webp"
+              srcset="assets/images/cinema-plein-air-400.webp">
+            <img
+              src="assets/images/cinema-plein-air-400.jpg"
+              alt="Public assis sur des transats devant un grand écran en plein air"
+              width="400"
+              height="250"
+              loading="lazy"
+              decoding="async">
+          </picture>
+          <h3>
+            <a href="/evenement/cinema-plein-air" itemprop="url">
+              <span itemprop="name">Cinéma plein air : Amélie Poulain</span>
+            </a>
+          </h3>
+          <p>
+            <time itemprop="startDate" datetime="2026-05-02T21:30">2 mai 2026 · 21h30</time>
+            ·
+            <span itemprop="location">Parc Borély</span>
+          </p>
+        </article>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ====================================================================
+       FOOTER (identique à index.html)
+       ==================================================================== -->
+  <footer role="contentinfo">
+
+    <section aria-labelledby="titre-footer-decouvrir">
+      <h2 id="titre-footer-decouvrir">Découvrir</h2>
+      <ul>
+        <li><a href="index.html">Tous les événements</a></li>
+        <li><a href="/lieux">Lieux culturels</a></li>
+        <li><a href="/carte">Carte interactive</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-footer-public">
+      <h2 id="titre-footer-public">Service public</h2>
+      <ul>
+        <li><a href="https://villanova.fr">Mairie de VillaNova</a></li>
+        <li><a href="/accessibilite">Déclaration d'accessibilité (RGAA 4.1)</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/donnees-personnelles">Données personnelles</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-footer-suivez">
+      <h2 id="titre-footer-suivez">Suivez-nous</h2>
+      <ul>
+        <li><a href="/newsletter">Newsletter</a></li>
+        <li><a href="https://instagram.com/villanova" rel="noopener external">Instagram</a></li>
+        <li><a href="/rss" type="application/rss+xml">Flux RSS</a></li>
+      </ul>
+    </section>
+
+    <p>
+      <small>
+        🌱 Site éco-conçu · 0,8 g CO₂ par page chargée ·
+        <a href="/eco-conception">Notre démarche éco-responsable</a>
+      </small>
+    </p>
+    <p>
+      <small>
+        © 2026 VillaNova · Service public · Conforme RGAA 4.1 niveau AA
+      </small>
+    </p>
+
+  </footer>
+
+  <script type="module" src="assets/js/event-detail.js"></script>
+</body>
+</html>

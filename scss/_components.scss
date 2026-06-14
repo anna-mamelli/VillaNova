@@ -1,0 +1,892 @@
+// =============================================================================
+//  VillaNova · _components.scss
+//  Composants réutilisables : boutons, cartes événement, formulaires, badges,
+//  vidéo, filtres pills, search bar.
+// =============================================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+
+// =============================================================================
+//  BOUTONS
+// =============================================================================
+
+// Variante Primary — Violet plein, le bouton principal de chaque écran
+.vn-btn-primary {
+  @include button-base;
+  background: $vn-violet;
+  color: $vn-creme;
+  border-color: $vn-violet;
+
+  &:hover {
+    background: $vn-violet-deep;
+    box-shadow: 0 4px 0 $vn-rose;
+  }
+}
+
+// Variante Accent — Rose néon, pour les CTA forts (Réserver, S'inscrire)
+.vn-btn-accent {
+  @include button-base;
+  background: $vn-rose;
+  color: $vn-blanc;
+  border-color: $vn-rose;
+
+  &:hover {
+    background: $vn-rose-dark;
+    box-shadow: 0 4px 0 $vn-violet-deep;
+  }
+}
+
+// Variante Outline — Bordure violette sur fond clair (boutons secondaires)
+.vn-btn-outline {
+  @include button-base;
+  background: $vn-blanc;
+  color: $vn-violet;
+  border-color: $vn-violet;
+
+  &:hover {
+    background: $vn-violet;
+    color: $vn-creme;
+  }
+}
+
+// Boutons natifs <button> dans les formulaires : par défaut version primary
+form button[type='submit'] {
+  @include button-base;
+  background: $vn-rose;
+  color: $vn-blanc;
+  border-color: $vn-rose;
+  padding: $space-xs $space-lg;
+  font-size: $fs-base;
+
+  &:hover {
+    background: $vn-rose-dark;
+    box-shadow: 0 4px 0 $vn-violet-deep;
+  }
+}
+
+
+// =============================================================================
+//  HERO (page d'accueil)
+//  La première section de <main>, identifiée par le h1 unique.
+// =============================================================================
+
+main > section:has(h1) {
+  // Eyebrow (le <small> avant le h1)
+  & > p:first-of-type {
+    color: $vn-rose;
+    font-size: $fs-xs;
+    font-weight: $fw-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: $space-sm;
+
+    &::before {
+      content: '— ';
+    }
+  }
+
+  // Highlighter lime sur les <em> du h1 (« tout près »)
+  h1 em {
+    @include highlighter-lime;
+    font-weight: $fw-extrabold;
+  }
+
+  // Description sous le h1
+  & > p:nth-of-type(2) {
+    font-family: $font-display;
+    font-size: clamp(#{$fs-md}, 2vw + 0.5rem, #{$fs-lg});
+    font-weight: $fw-bold;
+    line-height: $lh-snug;
+    max-width: 38rem;
+    color: $vn-violet-deep;
+  }
+
+  // Statistiques en <dl>
+  dl {
+    display: grid;
+    gap: $space-md;
+    margin-top: $space-lg;
+    padding: $space-md;
+    background: $vn-blanc;
+    border: 2px solid $vn-violet-deep;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-hard-rose;
+
+    @include respond-to('sm') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    & > div {
+      text-align: center;
+      padding: $space-2xs;
+
+      @include respond-to('sm') {
+        border-right: 1px solid $vn-border;
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+
+    dt {
+      font-size: $fs-xs;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: $vn-text-muted;
+      font-weight: $fw-semibold;
+      margin-bottom: $space-3xs;
+    }
+
+    dd {
+      font-family: $font-display;
+      font-size: $fs-3xl;
+      font-weight: $fw-extrabold;
+      color: $vn-violet-deep;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+  }
+}
+
+
+// =============================================================================
+//  BARRE DE RECHERCHE (élément <search>)
+// =============================================================================
+
+search form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2xs;
+  padding: $space-2xs;
+  background: $vn-blanc;
+  border: 2px solid $vn-violet;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-hard-rose;
+
+  @include respond-to('sm') {
+    flex-direction: row;
+    align-items: center;
+    border-radius: $radius-pill;
+    padding-left: $space-md;
+  }
+
+  // Labels visuellement cachés mais accessibles
+  label {
+    @include visually-hidden;
+  }
+
+  input[type='search'] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: $space-2xs $space-sm;
+    font-size: $fs-base;
+    color: $vn-text;
+
+    &::placeholder {
+      color: $vn-text-muted;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  select {
+    border: 1.5px solid $vn-border-strong;
+    background: $vn-blanc;
+    padding: $space-2xs $space-sm;
+    border-radius: $radius-md;
+    font-size: $fs-sm;
+    color: $vn-violet;
+    font-weight: $fw-semibold;
+    cursor: pointer;
+
+    @include respond-to('sm') {
+      border: none;
+      border-left: 1.5px solid $vn-border;
+      border-radius: 0;
+    }
+
+    &:focus-visible {
+      @include focus-ring;
+    }
+  }
+
+  button {
+    @include button-base;
+    background: $vn-violet;
+    color: $vn-creme;
+    border-color: $vn-violet;
+
+    &:hover {
+      background: $vn-violet-deep;
+    }
+  }
+}
+
+
+// =============================================================================
+//  FILTRES PAR CATÉGORIE (nav avec aria-label="Filtrer par catégorie")
+//  Pills cliquables.
+// =============================================================================
+
+nav[aria-label='Filtrer par catégorie'] {
+  h2 {
+    @include visually-hidden;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2xs;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    padding: $space-2xs $space-md;
+    background: $vn-blanc;
+    border: 2px solid $vn-violet;
+    border-radius: $radius-pill;
+    color: $vn-violet;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    text-decoration: none;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $vn-lime;
+      transform: translateY(-1px);
+    }
+
+    &[aria-current='true'] {
+      background: $vn-violet;
+      color: $vn-creme;
+    }
+  }
+}
+
+
+// =============================================================================
+//  CARTE FEATURED (« À la une »)
+//  Article en gradient violet → violet profond, image gauche, texte droite.
+// =============================================================================
+
+main > section:has(> h2#titre-une) {
+  & > article {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    border-radius: $radius-lg;
+    background: linear-gradient(135deg, $vn-violet 0%, $vn-violet-deep 100%);
+    color: $vn-creme;
+    box-shadow: $shadow-hard-rose-lg;
+    position: relative;
+
+    @include respond-to('md') {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    // Pastille lime décorative en arrière-plan
+    &::before {
+      content: '';
+      position: absolute;
+      top: -3rem;
+      right: -3rem;
+      width: 12rem;
+      height: 12rem;
+      background: $vn-lime;
+      border-radius: 50%;
+      opacity: 0.25;
+      filter: blur(20px);
+      pointer-events: none;
+    }
+
+    // Image
+    picture {
+      img {
+        width: 100%;
+        height: 100%;
+        min-height: 16rem;
+        object-fit: cover;
+      }
+    }
+
+    // Header de l'article (eyebrow + titre)
+    header {
+      padding: $space-md $space-md 0;
+      position: relative;
+      z-index: 1;
+
+      @include respond-to('md') {
+        padding: $space-lg $space-lg 0;
+      }
+
+      & > p:first-child {
+        font-size: $fs-xs;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: $vn-lime;
+        font-weight: $fw-bold;
+        margin-bottom: $space-2xs;
+      }
+
+      h3 {
+        color: $vn-creme;
+        font-size: clamp(#{$fs-xl}, 3vw + 0.5rem, #{$fs-3xl});
+
+        a {
+          color: inherit;
+          text-decoration: none;
+
+          &:hover {
+            color: $vn-lime;
+            text-decoration: underline;
+            text-decoration-thickness: 0.1em;
+          }
+        }
+      }
+    }
+
+    // Description
+    & > p {
+      padding: 0 $space-md;
+      color: rgba(255, 251, 245, 0.9);
+
+      @include respond-to('md') {
+        padding: 0 $space-lg;
+      }
+    }
+
+    // Footer de l'article (infos pratiques)
+    & > footer {
+      padding: $space-sm $space-md $space-md;
+      display: grid;
+      gap: $space-2xs;
+      font-size: $fs-sm;
+
+      @include respond-to('sm') {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @include respond-to('md') {
+        padding: $space-sm $space-lg $space-lg;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      strong {
+        display: block;
+        color: $vn-lime;
+        font-size: $fs-xs;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+    }
+  }
+}
+
+
+// =============================================================================
+//  LISTE DES ÉVÉNEMENTS
+//  Grille responsive : 1 colonne mobile → 2 → 3 desktop.
+// =============================================================================
+
+main > section:has(> h2#titre-liste) {
+  & > ul {
+    display: grid;
+    gap: $space-md;
+    margin-top: $space-md;
+
+    @include respond-to('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  & > nav[aria-label*='Pagination'] {
+    margin-top: $space-lg;
+
+    ul {
+      display: flex;
+      gap: $space-2xs;
+      justify-content: center;
+    }
+
+    a {
+      display: grid;
+      place-items: center;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      padding: 0 $space-2xs;
+      border: 1.5px solid $vn-border-strong;
+      border-radius: $radius-md;
+      color: $vn-violet;
+      text-decoration: none;
+      font-weight: $fw-semibold;
+
+      &:hover {
+        background: $vn-violet;
+        color: $vn-creme;
+        border-color: $vn-violet;
+      }
+
+      &[aria-current='page'] {
+        background: $vn-violet;
+        color: $vn-creme;
+        border-color: $vn-violet;
+      }
+    }
+  }
+}
+
+
+// =============================================================================
+//  CARTE ÉVÉNEMENT (dans la liste + dans l'aside « Vous aimerez aussi »)
+// =============================================================================
+
+main ul article,
+body > aside ul article,
+aside ul article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $vn-blanc;
+  border: 2px solid $vn-violet-deep;
+  border-radius: $radius-md;
+  overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-hard-md;
+  }
+
+  picture {
+    position: relative;
+
+    img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+  }
+
+  // Date badge sticker rotation -3° (signature visuelle)
+  picture::before {
+    content: attr(data-date);
+    position: absolute;
+    top: $space-2xs;
+    left: $space-2xs;
+    background: $vn-lime;
+    color: $vn-violet-deep;
+    padding: $space-3xs $space-2xs;
+    border: 2px solid $vn-violet-deep;
+    border-radius: $radius-sm;
+    font-family: $font-display;
+    font-weight: $fw-extrabold;
+    font-size: $fs-sm;
+    transform: rotate(-3deg);
+    box-shadow: $shadow-hard-sm;
+  }
+
+  h3 {
+    padding: $space-sm $space-sm $space-2xs;
+    font-size: $fs-md;
+    line-height: $lh-snug;
+
+    a {
+      color: $vn-violet-deep;
+      text-decoration: none;
+
+      &:hover {
+        color: $vn-rose;
+      }
+    }
+  }
+
+  p {
+    padding: 0 $space-sm;
+    margin-bottom: $space-2xs;
+    font-size: $fs-sm;
+    color: $vn-text-muted;
+
+    &:last-child {
+      padding-bottom: $space-sm;
+    }
+  }
+
+  time {
+    font-weight: $fw-semibold;
+    color: $vn-violet;
+  }
+}
+
+
+// =============================================================================
+//  FICHE ÉVÉNEMENT — Hero pleine largeur
+// =============================================================================
+
+main > article > header {
+  margin-bottom: $space-lg;
+
+  // Lien retour
+  & > p:first-child a {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-3xs;
+    font-size: $fs-sm;
+    color: $vn-violet;
+    text-decoration: none;
+    margin-bottom: $space-md;
+
+    &:hover {
+      color: $vn-rose;
+      text-decoration: underline;
+    }
+  }
+
+  // Tags
+  & > p:nth-child(2) {
+    margin-bottom: $space-sm;
+
+    small > span {
+      display: inline-block;
+      padding: $space-3xs $space-2xs;
+      margin-right: $space-3xs;
+      border-radius: $radius-pill;
+      font-size: $fs-xs;
+      font-weight: $fw-bold;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+
+      &:first-child {
+        background: $vn-rose;
+        color: $vn-blanc;
+      }
+
+      &:nth-child(3) {
+        background: $vn-lime;
+        color: $vn-violet-deep;
+      }
+
+      &:last-child {
+        background: $vn-violet;
+        color: $vn-creme;
+      }
+    }
+  }
+
+  h1 {
+    margin-bottom: $space-md;
+  }
+
+  picture img {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    object-fit: cover;
+    border-radius: $radius-lg;
+    border: 2px solid $vn-violet-deep;
+    box-shadow: $shadow-hard-rose-lg;
+  }
+}
+
+
+// =============================================================================
+//  FICHE ÉVÉNEMENT — Section Informations pratiques (<dl>)
+// =============================================================================
+
+main > article section:has(> h2#titre-infos) {
+  dl {
+    display: grid;
+    gap: $space-md;
+    padding: $space-md;
+    background: $vn-blanc;
+    border: 2px solid $vn-violet-deep;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-hard-md;
+
+    @include respond-to('md') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  dt {
+    font-size: $fs-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: $vn-rose;
+    font-weight: $fw-bold;
+    margin-bottom: $space-3xs;
+  }
+
+  dd {
+    font-family: $font-display;
+    font-size: $fs-md;
+    font-weight: $fw-bold;
+    color: $vn-violet-deep;
+    letter-spacing: -0.02em;
+    line-height: $lh-snug;
+  }
+}
+
+
+// =============================================================================
+//  FICHE ÉVÉNEMENT — Lead avec highlighter lime
+// =============================================================================
+
+main > article section:has(> h2#titre-description) {
+  p:first-of-type {
+    @extend .lead;
+
+    strong {
+      @include highlighter-lime;
+      font-weight: $fw-extrabold;
+      padding: 0 $space-3xs;
+    }
+  }
+}
+
+
+// =============================================================================
+//  FICHE ÉVÉNEMENT — Vidéo
+// =============================================================================
+
+figure:has(video) {
+  margin: 0;
+
+  video {
+    width: 100%;
+    border-radius: $radius-lg;
+    border: 2px solid $vn-violet-deep;
+    box-shadow: $shadow-hard-rose;
+    background: $vn-violet-deep;  // Fallback si poster absent
+  }
+
+  figcaption {
+    margin-top: $space-2xs;
+    font-size: $fs-sm;
+    color: $vn-text-muted;
+    font-style: italic;
+    text-align: center;
+  }
+}
+
+
+// =============================================================================
+//  FICHE ÉVÉNEMENT — Programme
+// =============================================================================
+
+main > article section:has(> h2#titre-programme) {
+  h3 {
+    margin-top: $space-lg;
+    margin-bottom: $space-sm;
+    padding-bottom: $space-2xs;
+    border-bottom: 2px solid $vn-rose;
+    color: $vn-violet-deep;
+  }
+
+  ol {
+    counter-reset: prog;
+    display: grid;
+    gap: $space-2xs;
+  }
+
+  li {
+    counter-increment: prog;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $space-md;
+    padding: $space-sm;
+    background: $vn-blanc;
+    border-left: 4px solid $vn-rose;
+    border-radius: $radius-sm;
+
+    time {
+      font-family: $font-display;
+      font-weight: $fw-extrabold;
+      font-size: $fs-md;
+      color: $vn-rose;
+      letter-spacing: -0.02em;
+      min-width: 4rem;
+    }
+
+    strong {
+      display: block;
+      color: $vn-violet-deep;
+      font-weight: $fw-bold;
+      margin-bottom: $space-3xs;
+    }
+
+    p {
+      margin: 0;
+      font-size: $fs-sm;
+      color: $vn-text-muted;
+    }
+  }
+}
+
+
+// =============================================================================
+//  FORMULAIRE DE RÉSERVATION
+// =============================================================================
+
+main > article section:has(> h2#titre-reservation) {
+  form {
+    display: grid;
+    gap: $space-lg;
+    padding: $space-md;
+    background: $vn-blanc;
+    border: 2px solid $vn-violet-deep;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-hard-md;
+
+    @include respond-to('md') {
+      padding: $space-lg;
+    }
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+
+    legend {
+      font-family: $font-display;
+      font-size: $fs-md;
+      font-weight: $fw-bold;
+      color: $vn-violet-deep;
+      margin-bottom: $space-sm;
+      padding-bottom: $space-2xs;
+      border-bottom: 2px solid $vn-rose;
+      width: 100%;
+    }
+
+    & > p {
+      margin-bottom: $space-2xs;
+      display: flex;
+      flex-direction: column;
+      gap: $space-3xs;
+
+      // Pour les checkboxes : label en flex à côté de l'input
+      &:has(input[type='checkbox']) {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: $space-2xs;
+      }
+    }
+  }
+
+  label {
+    font-weight: $fw-semibold;
+    color: $vn-violet-deep;
+    font-size: $fs-sm;
+
+    abbr[title='obligatoire'] {
+      color: $vn-rose;
+      text-decoration: none;
+      margin-left: $space-3xs;
+    }
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'] {
+    padding: $space-2xs $space-sm;
+    border: 1.5px solid $vn-border-strong;
+    border-radius: $radius-md;
+    background: $vn-creme;
+    color: $vn-text;
+    font-size: $fs-base;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $vn-violet;
+      box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.2);
+    }
+
+    &:invalid:not(:placeholder-shown) {
+      border-color: $vn-rose;
+    }
+  }
+
+  input[type='checkbox'] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: $vn-violet;  // Coche en couleur de marque
+    margin-top: 0.15rem;
+    cursor: pointer;
+  }
+
+  // Mention RGPD
+  & > p:has(small) {
+    font-size: $fs-xs;
+    color: $vn-text-muted;
+    line-height: $lh-relaxed;
+  }
+}
+
+
+// =============================================================================
+//  PARTAGER (liste de liens)
+// =============================================================================
+
+main > article section:has(> h2#titre-partage) {
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2xs;
+  }
+
+  li a {
+    display: inline-flex;
+    align-items: center;
+    padding: $space-2xs $space-md;
+    background: $vn-blanc;
+    border: 2px solid $vn-violet;
+    border-radius: $radius-pill;
+    color: $vn-violet;
+    font-size: $fs-sm;
+    font-weight: $fw-semibold;
+    text-decoration: none;
+
+    &:hover {
+      background: $vn-violet;
+      color: $vn-creme;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+
+// =============================================================================
+//  ASIDE « Vous aimerez aussi » sur la fiche événement
+// =============================================================================
+
+body > aside:has(> h2#titre-similaires) {
+  ul {
+    display: grid;
+    gap: $space-md;
+
+    @include respond-to('sm') {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

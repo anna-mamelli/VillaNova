@@ -1,0 +1,139 @@
+// =============================================================================
+//  VillaNova · _variables.scss
+//  Toutes les valeurs réutilisables du design system, centralisées ici.
+//  Si demain la mairie change la couleur principale, on modifie 1 ligne.
+// =============================================================================
+
+
+// -----------------------------------------------------------------------------
+//  PALETTE — Direction « punchy » assumée pour la cible 18-35 ans
+//  Tous les contrastes ont été vérifiés WCAG 2.1 (voir charte graphique)
+// -----------------------------------------------------------------------------
+
+// Primaire
+$vn-violet:        #5B21B6;  // Boutons primary, header, liens — 8.71:1 sur crème (AAA)
+$vn-violet-soft:   #7C3AED;  // Hover violet, accents secondaires
+$vn-violet-deep:   #2E1065;  // Texte principal, footer — 14.78:1 sur crème (AAA)
+
+// Accents
+$vn-rose:          #EC4899;  // Accent CTA, ombres dures décoratives — réservé aux fonds & gras
+$vn-rose-dark:     #BE185D;  // Hover accent
+$vn-lime:          #BEF264;  // Highlight, badges sticker, surlignage type marqueur
+
+// Neutres
+$vn-creme:         #FFFBF5;  // Fond principal — plus chaud que blanc pur
+$vn-creme-warm:    #FEF3C7;  // Fond alternatif (lignes paires de tableau, callouts)
+$vn-blanc:         #FFFFFF;  // Surfaces (cartes par-dessus crème)
+$vn-muted:         #6D5B9F;  // Texte secondaire — 5.58:1 sur crème (AA)
+$vn-border:        #EDE9FE;  // Bordure très claire
+$vn-border-strong: #C4B5FD;  // Bordure marquée
+
+// Sémantique applicative
+$vn-bg:            $vn-creme;
+$vn-text:          $vn-violet-deep;
+$vn-text-muted:    $vn-muted;
+
+
+// -----------------------------------------------------------------------------
+//  TYPOGRAPHIES
+//  Stacks complets avec fallbacks système, pour rester lisibles si Google Fonts
+//  est bloqué (réseau lent, FoUT, navigateur sans accès externe).
+// -----------------------------------------------------------------------------
+
+$font-display:  'Bricolage Grotesque', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-body:     'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-mono:     'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+
+// Échelle modulaire (ratio 1.250 - Major Third, lisible sans être tape-à-l'œil)
+$fs-xs:    0.75rem;    // 12px
+$fs-sm:    0.875rem;   // 14px
+$fs-base:  1rem;       // 16px (référence)
+$fs-md:    1.125rem;   // 18px
+$fs-lg:    1.25rem;    // 20px
+$fs-xl:    1.5rem;     // 24px
+$fs-2xl:   1.875rem;   // 30px
+$fs-3xl:   2.25rem;    // 36px
+$fs-4xl:   3rem;       // 48px
+$fs-5xl:   3.75rem;    // 60px
+
+// Graisses
+$fw-normal:    400;
+$fw-medium:    500;
+$fw-semibold:  600;
+$fw-bold:      700;
+$fw-extrabold: 800;
+
+// Hauteurs de ligne (sans unité = multiplicateur du font-size, recommandé WCAG)
+$lh-tight:    1.1;
+$lh-snug:     1.25;
+$lh-normal:   1.5;       // Minimum recommandé WCAG pour le texte courant
+$lh-relaxed:  1.625;
+$lh-loose:    1.75;
+
+
+// -----------------------------------------------------------------------------
+//  ESPACEMENTS — Échelle 8px (rem-based)
+//  Cohérence guarantie : tous les paddings/margins viennent d'ici
+// -----------------------------------------------------------------------------
+
+$space-3xs:  0.25rem;   //  4px
+$space-2xs:  0.5rem;    //  8px
+$space-xs:   0.75rem;   // 12px
+$space-sm:   1rem;      // 16px
+$space-md:   1.5rem;    // 24px
+$space-lg:   2rem;      // 32px
+$space-xl:   3rem;      // 48px
+$space-2xl:  4rem;      // 64px
+$space-3xl:  6rem;      // 96px
+
+
+// -----------------------------------------------------------------------------
+//  RADIUS, OMBRES, TRANSITIONS
+// -----------------------------------------------------------------------------
+
+$radius-sm:  0.375rem;    //  6px — Inputs, petits badges
+$radius-md:  0.625rem;    // 10px — Cartes, boutons rectangulaires
+$radius-lg:  1rem;        // 16px — Cartes premium, hero cards
+$radius-xl:  1.5rem;      // 24px — Containers
+$radius-pill: 9999px;     // Pills / boutons arrondis
+
+// Ombres dures (signature visuelle du design system)
+$shadow-hard-sm:    3px 3px 0  $vn-violet-deep;
+$shadow-hard-md:    4px 4px 0  $vn-violet-deep;
+$shadow-hard-lg:    6px 6px 0  $vn-violet-deep;
+$shadow-hard-rose:  4px 4px 0  $vn-rose;
+$shadow-hard-rose-lg: 6px 6px 0  $vn-rose;
+
+// Ombres souples (subtiles, pour les éléments flottants/popins)
+$shadow-soft-sm: 0 1px 2px rgba(46, 16, 101, 0.06), 0 2px 4px rgba(46, 16, 101, 0.04);
+$shadow-soft-md: 0 4px 6px rgba(46, 16, 101, 0.06), 0 10px 24px rgba(46, 16, 101, 0.08);
+
+// Transitions
+$transition-fast:   150ms ease;
+$transition-base:   200ms ease;
+$transition-slow:   300ms ease;
+
+
+// -----------------------------------------------------------------------------
+//  BREAKPOINTS — Mobile First strict
+//  Valeurs en em (et non px) pour respecter le zoom navigateur de l'utilisateur :
+//  un utilisateur qui zoome à 200% (RGAA 10.4) ne « perd » pas ses media queries.
+// -----------------------------------------------------------------------------
+
+$bp-sm:   30em;    //  480px — gros mobiles, paysage
+$bp-md:   48em;    //  768px — tablettes
+$bp-lg:   64em;    // 1024px — desktop standard
+$bp-xl:   80em;    // 1280px — large desktop
+$bp-2xl:  90em;    // 1440px — très grands écrans
+
+
+// -----------------------------------------------------------------------------
+//  Z-INDEX — Échelle nommée pour éviter les surenchères 9999, 99999
+// -----------------------------------------------------------------------------
+
+$z-base:        1;
+$z-elevated:    10;
+$z-sticky:      100;   // Navigation sticky, sidebar sticky
+$z-overlay:     1000;
+$z-modal:       2000;
+$z-skip-link:   9999;  // Skip-link doit toujours être au-dessus de tout

@@ -1,0 +1,233 @@
+// =============================================================================
+//  VillaNova · _base.scss
+//  Reset léger + styles globaux (body, titres, liens, formulaires).
+//  Pas de Normalize.css ni Reset agressif : on garde les bases sémantiques.
+// =============================================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+
+// -----------------------------------------------------------------------------
+//  IMPORT DES TYPOGRAPHIES
+//  Display=swap : évite le FOIT (Flash Of Invisible Text) — le texte s'affiche
+//  immédiatement avec la fonte système, puis bascule vers Bricolage/Inter
+//  une fois téléchargées. Bénéfice : First Contentful Paint plus rapide.
+// -----------------------------------------------------------------------------
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap');
+
+
+// -----------------------------------------------------------------------------
+//  RESET MINIMAL
+// -----------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  // Active le scroll fluide sur les ancres, sauf si l'utilisateur a réduit
+  // les animations système (RGAA 13.8 / WCAG 2.3.3)
+  scroll-behavior: smooth;
+
+  // Empêche le zoom auto sur iOS quand on focus un input < 16px
+  -webkit-text-size-adjust: 100%;
+
+  // Améliore le rendu des fontes sur Mac/Linux
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  BODY
+// -----------------------------------------------------------------------------
+
+body {
+  font-family: $font-body;
+  font-size: $fs-base;
+  line-height: $lh-relaxed;
+  color: $vn-text;
+  background: $vn-bg;
+  min-height: 100vh;
+
+  // Empêche les débordements horizontaux sur mobile
+  overflow-x: hidden;
+}
+
+
+// -----------------------------------------------------------------------------
+//  HIÉRARCHIE TYPOGRAPHIQUE
+//  Tailles fluides via clamp() : s'adaptent à la largeur d'écran SANS
+//  besoin de media queries. clamp(min, ideal, max).
+//  ideal = formule basée sur la largeur viewport (vw) + correction rem.
+// -----------------------------------------------------------------------------
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-display;
+  font-weight: $fw-extrabold;
+  line-height: $lh-tight;
+  letter-spacing: -0.03em;
+  color: $vn-violet-deep;
+  text-wrap: balance;  // Équilibre les retours à la ligne sur les titres
+}
+
+h1 {
+  font-size: clamp(#{$fs-3xl}, 4.5vw + 1rem, #{$fs-5xl});
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: $space-md;
+}
+
+h2 {
+  font-size: clamp(#{$fs-xl}, 3vw + 0.75rem, #{$fs-3xl});
+  margin-bottom: $space-sm;
+}
+
+h3 {
+  font-size: clamp(#{$fs-lg}, 2vw + 0.5rem, #{$fs-xl});
+  font-weight: $fw-bold;
+  letter-spacing: -0.02em;
+  margin-bottom: $space-2xs;
+}
+
+h4, h5, h6 {
+  font-size: $fs-md;
+  font-weight: $fw-bold;
+  margin-bottom: $space-2xs;
+}
+
+p {
+  margin-bottom: $space-sm;
+  text-wrap: pretty;  // Évite les « lignes orphelines » d'un seul mot
+}
+
+// Le « lead » du Jour 2 et 3 : paragraphe d'introduction stylisé
+.lead {
+  font-family: $font-display;
+  font-size: clamp(#{$fs-md}, 2vw + 0.5rem, #{$fs-lg});
+  font-weight: $fw-bold;
+  line-height: $lh-snug;
+  color: $vn-violet-deep;
+  margin-bottom: $space-md;
+}
+
+
+// -----------------------------------------------------------------------------
+//  LIENS
+// -----------------------------------------------------------------------------
+
+a {
+  color: $vn-violet;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.15em;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $vn-rose;
+    text-decoration-thickness: 0.15em;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  IMAGES & MÉDIAS
+// -----------------------------------------------------------------------------
+
+img, picture, video {
+  display: block;
+  max-width: 100%;
+  height: auto;  // Ratio préservé même si on a width/height dans le HTML
+}
+
+
+// -----------------------------------------------------------------------------
+//  ÉLÉMENTS DE FORMULAIRE
+// -----------------------------------------------------------------------------
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+
+// -----------------------------------------------------------------------------
+//  LISTES — On retire les puces par défaut, on les remettra quand pertinent
+// -----------------------------------------------------------------------------
+
+ul, ol {
+  list-style: none;
+}
+
+
+// -----------------------------------------------------------------------------
+//  ÉLÉMENT <em> — Par défaut on enlève l'italique (Bricolage n'en a pas).
+//  L'effet d'emphase est repris par .lead em ou h1 em via highlighter-lime.
+// -----------------------------------------------------------------------------
+
+em {
+  font-style: normal;
+}
+
+
+// -----------------------------------------------------------------------------
+//  SKIP-LINK — Accessibilité clavier (RGAA 12.7)
+//  Caché hors écran tant qu'il n'a pas le focus.
+// -----------------------------------------------------------------------------
+
+.skip-link {
+  position: absolute;
+  top: $space-2xs;
+  left: $space-2xs;
+  z-index: $z-skip-link;
+
+  padding: $space-2xs $space-md;
+  background: $vn-violet-deep;
+  color: $vn-creme;
+  font-weight: $fw-bold;
+  text-decoration: none;
+  border-radius: $radius-md;
+
+  // Caché par défaut, visible au focus
+  transform: translateY(-150%);
+  transition: transform $transition-base;
+
+  &:focus,
+  &:focus-visible {
+    transform: translateY(0);
+    color: $vn-creme;
+    outline: 3px solid $vn-lime;
+    outline-offset: 2px;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  SÉLECTION TEXTE — Cohérent avec la palette
+// -----------------------------------------------------------------------------
+
+::selection {
+  background: $vn-lime;
+  color: $vn-violet-deep;
+}

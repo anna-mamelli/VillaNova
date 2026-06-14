@@ -1,0 +1,164 @@
+// =============================================================================
+//  VillaNova · _mixins.scss
+//  Patterns réutilisables encapsulés dans des mixins.
+//  Permet d'éviter la répétition (principe DRY) et de garantir la cohérence.
+// =============================================================================
+
+@use 'variables' as *;
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : respond-to($breakpoint)
+//  Mobile First : on écrit le style mobile par défaut, et on l'enrichit
+//  progressivement avec respond-to('md'), respond-to('lg'), etc.
+//
+//  Exemple :
+//    .card {
+//      padding: $space-sm;
+//      @include respond-to('md') { padding: $space-lg; }
+//    }
+// -----------------------------------------------------------------------------
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (min-width: $bp-sm) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: $bp-md) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: $bp-lg) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: $bp-xl) { @content; }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: $bp-2xl) { @content; }
+  } @else {
+    @error "Breakpoint inconnu : `#{$breakpoint}`. Utiliser sm | md | lg | xl | 2xl.";
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : focus-ring
+//  Anneau de focus accessible et visible — critère RGAA 10.7.
+//  Appliqué à TOUS les éléments interactifs (a, button, input, etc.)
+// -----------------------------------------------------------------------------
+
+@mixin focus-ring($color: $vn-rose) {
+  outline: 3px solid $color;
+  outline-offset: 2px;
+  border-radius: $radius-sm;
+}
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : button-base
+//  Base commune à tous les boutons et CTA. Les variantes (primary/accent/outline)
+//  étendent cette base avec leurs propres couleurs.
+// -----------------------------------------------------------------------------
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2xs;
+
+  padding: $space-2xs $space-md;
+  border: 2px solid transparent;
+  border-radius: $radius-pill;
+
+  font-family: $font-body;
+  font-size: $fs-sm;
+  font-weight: $fw-bold;
+  line-height: $lh-tight;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: transform $transition-fast, background-color $transition-base, box-shadow $transition-base;
+  user-select: none;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : highlighter-lime
+//  Effet « surlignage marqueur fluo » lime sur du texte.
+//  Utilisé sur les mots-clés des titres (H1 hero, lead).
+//  Astuce : box-shadow gauche/droite pour étendre légèrement le surlignage.
+// -----------------------------------------------------------------------------
+
+@mixin highlighter-lime {
+  background: $vn-lime;
+  box-shadow: 0.25em 0 0 $vn-lime, -0.25em 0 0 $vn-lime;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  color: $vn-violet-deep;
+  font-style: normal;  // Annule l'italique par défaut sur <em>
+}
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : visually-hidden
+//  Cache visuellement un élément tout en le gardant accessible aux lecteurs
+//  d'écran (utile pour les <legend>, labels, instructions).
+//  Technique recommandée par a11yproject.com.
+// -----------------------------------------------------------------------------
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : container
+//  Largeur maximale + centrage + padding latéral.
+//  Évite que le contenu touche les bords de l'écran sur mobile.
+// -----------------------------------------------------------------------------
+
+@mixin container($max-width: 75rem) {  // 1200px par défaut
+  width: 100%;
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: $space-sm;
+
+  @include respond-to('md') {
+    padding-inline: $space-lg;
+  }
+}
+
+
+// -----------------------------------------------------------------------------
+//  MIXIN : truncate
+//  Tronque un texte avec ... après N lignes. Utile pour les descriptions
+//  d'événements en card, où on veut une hauteur uniforme.
+// -----------------------------------------------------------------------------
+
+@mixin truncate($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

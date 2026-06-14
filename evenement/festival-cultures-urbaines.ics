@@ -1,0 +1,19 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//VillaNova//Plateforme culturelle//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:festival-cultures-urbaines-2026@villanova.fr
+DTSTAMP:20260301T100000Z
+DTSTART:20260426T120000Z
+DTEND:20260428T210000Z
+SUMMARY:Festival des cultures urbaines
+DESCRIPTION:Trois jours pour célébrer les cultures urbaines au Vieux-Port : musique\, danse\, arts visuels et débats. Plus de 80 artistes locaux et internationaux. Entrée libre.
+LOCATION:Vieux-Port\, Quai des Belges\, 13001 VillaNova
+URL:https://villanova.fr/evenement/festival-cultures-urbaines
+ORGANIZER;CN=Mairie de VillaNova:mailto:culture@villanova.fr
+CATEGORIES:FESTIVAL,CULTURE,GRATUIT
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  VillaNova — Favicon SVG
+  Format vectoriel : ~1 Ko, scale infini, pas de génération de tailles.
+  Couleurs : palette principale (violet + rose).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="VillaNova">
+  <!-- Fond arrondi violet -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#5B21B6"/>
+
+  <!-- Lettre V crème centrée -->
+  <path d="M 18 16 L 32 46 L 46 16"
+        fill="none"
+        stroke="#FFFBF5"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+
+  <!-- Point rose en accent (signature visuelle) -->
+  <circle cx="48" cy="48" r="5" fill="#EC4899"/>
+</svg>

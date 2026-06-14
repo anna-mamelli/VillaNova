@@ -1,0 +1,27 @@
+// =============================================================================
+//
+//  VillaNova — Feuille de style principale
+//  Bachelor ASR · La Plateforme_ · Jour 03 · Stylisation SASS
+//  Anna Mamelli · Avril 2026
+//
+//  Architecture :
+//    1. _variables.scss   — Palette, typo, espacements, breakpoints
+//    2. _mixins.scss      — Patterns réutilisables (respond-to, focus-ring…)
+//    3. _base.scss        — Reset, typo globale, body, skip-link
+//    4. _layout.scss      — Header, nav, main, aside, footer
+//    5. _components.scss  — Boutons, cartes, formulaires, vidéo, badges
+//
+//  Approche : Mobile First strict — on écrit le mobile par défaut puis on
+//  enrichit avec @include respond-to('md'), respond-to('lg'), etc.
+//
+//  Compilation :
+//    sass scss/style.scss css/style.css --style=expanded
+//    sass scss/style.scss css/style.min.css --style=compressed
+//
+// =============================================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'base';
+@use 'layout';
+@use 'components';
