@@ -26,7 +26,6 @@ Projet **frontend vanilla** (sans framework) pour démontrer la maîtrise des fo
 
 | Axe | Compétence | Où la voir |
 |---|---|---|
-| **Cadrage** | User stories, méthodologie Agile | `JOUR04-defense.md` |
 | **Conception** | Maquettes Lo-Fi → Hi-Fi, design system, modélisation UML | `scss/_variables.scss`, deck |
 | **Front-end** | HTML sémantique, SCSS modulaire, JS ES modules | `index.html`, `scss/`, `assets/js/` |
 | **API** | Multi-agendas OpenAgenda, Promise.all, normalisation | `assets/js/api.js` |
