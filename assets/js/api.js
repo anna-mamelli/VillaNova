@@ -1,40 +1,7 @@
 /**
  * VillaNova · api.js
- * ============================================================================
- * Module de connexion à l'API OpenAgenda.
  *
- * Documentation officielle : https://developers.openagenda.com/
- * Endpoint events : https://api.openagenda.com/v2/agendas/{uid}/events
- *
- *
- * 🔧 CONFIGURATION RAPIDE (3 minutes)
- * ----------------------------------------------------------------------------
- * 1. Créer un compte GRATUIT sur https://openagenda.com (bouton "S'inscrire"
- *    en haut à droite). Pas de carte bancaire demandée.
- *
- * 2. Aller sur https://openagenda.com/settings/api → onglet "Clés API"
- *    → cliquer "Créer une nouvelle clé" → cocher "Lecture" uniquement
- *    → copier la valeur de la clé publique
- *
- * 3. Trouver l'UID d'un agenda public (parcourir https://openagenda.com,
- *    cliquer sur un agenda qui vous intéresse, et regarder en bas à droite
- *    de la barre latérale : "uid: 12345678")
- *
- *    Suggestions d'agendas marseillais à explorer :
- *      • https://openagenda.com/fr/marseille-alive  (Live Massila — concerts)
- *      • https://openagenda.com/fr/mucem            (Mucem — programmation)
- *      • https://openagenda.com/fr/festival-marseille (Festival de Marseille)
- *
- *    Pour Paris : https://openagenda.com/fr/quefaire-paris (agenda officiel)
- *
- * 4. Remplacer les valeurs ci-dessous (lignes API_CONFIG.publicKey et
- *    API_CONFIG.agendaUid) par vos vraies valeurs.
- *
- * 5. Lancer le projet : `python3 -m http.server 8000` puis ouvrir
- *    http://localhost:8000
- *
- *
- * 🎯 MODE DÉMO AUTOMATIQUE
+ * MODE DÉMO AUTOMATIQUE
  * ----------------------------------------------------------------------------
  * Si la clé publique n'est pas configurée, le code
  * bascule automatiquement en mode DÉMO et utilise les données fictives de

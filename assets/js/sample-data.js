@@ -2,17 +2,6 @@
  * VillaNova · sample-data.js
  * ============================================================================
  * Données d'exemple pour le mode DÉMO.
- *
- * Ces événements fictifs sont utilisés quand la clé API OpenAgenda n'a pas
- * encore été configurée. Ils permettent de présenter le projet sans avoir
- * besoin d'un compte OpenAgenda.
- *
- * Format identique à celui que retournerait l'API OpenAgenda v2 — comme ça
- * le code de api.js / ui.js fonctionne exactement de la même manière dans
- * les deux modes.
- *
- * Pour passer en mode RÉEL : modifier api.js avec votre clé publique et
- * l'UID de votre agenda OpenAgenda. Voir JOUR04-defense.md.
  * ============================================================================
  */
 

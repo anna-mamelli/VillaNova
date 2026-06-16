@@ -1,10 +1,6 @@
 /**
  * VillaNova · a11y.js
  * ============================================================================
- * Utilitaires d'accessibilité — point central pour les interactions JS
- * accessibles aux lecteurs d'écran (NVDA, VoiceOver, JAWS, TalkBack) et aux
- * utilisateurs clavier.
- *
  * Référence WCAG 2.1 AA + RGAA 4.1.
  * ============================================================================
  */
@@ -17,12 +13,6 @@
 /**
  * Une "live region" est une zone du DOM dont les changements sont annoncés
  * automatiquement par le lecteur d'écran. Critère essentiel WCAG 4.1.3.
- *
- * Cas d'usage concrets sur VillaNova :
- *  - "Chargement des événements en cours…"
- *  - "12 événements trouvés" après un filtre
- *  - "Aucun résultat pour 'concert jazz'"
- *  - "Erreur de chargement, veuillez réessayer"
  *
  * Sans live region, le lecteur d'écran ne dit RIEN quand le DOM change
  * dynamiquement → l'utilisateur aveugle ne sait pas que sa recherche a abouti.

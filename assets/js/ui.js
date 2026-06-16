@@ -5,7 +5,7 @@
  *
  * SÉCURITÉ : on utilise createElement() + textContent, JAMAIS innerHTML
  * pour les données provenant de l'API. C'est la défense contre les attaques
- * XSS (Cross-Site Scripting) — un titre malicieux <script>alert(1)</script>
+ * XSS (Cross-Site Scripting) - un titre malicieux <script>alert(1)</script>
  * serait exécuté avec innerHTML, mais affiché tel quel avec textContent.
  *
  * Référence OWASP : https://owasp.org/www-community/attacks/xss/
