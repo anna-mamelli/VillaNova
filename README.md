@@ -151,7 +151,7 @@ Le projet est volontairement frontend pour respecter le brief. Évolutions ident
 
 ## Documentation
 
-- `JOUR04-defense.md` — dossier de défense détaillé pour le jury Bloc 2
+- `JOUR04-defense.md` - dossier de défense détaillé pour le jury Bloc 2
 - Présentations PowerPoint (decks) générés séparément
 
 ## Licence
@@ -161,6 +161,6 @@ Projet pédagogique. Code disponible sous licence MIT.
 ## Auteur
 
 **Anna Mamelli**
-Bachelor ASR — La Plateforme_ Marseille
-Certification Développeur Full Stack — Bloc 2
+Bachelor ASR - La Plateforme_ Marseille
+Certification Développeur Full Stack - Bloc 2
 Juin 2026
