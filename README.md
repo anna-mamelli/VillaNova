@@ -46,7 +46,7 @@ Projet **frontend vanilla** (sans framework) pour démontrer la maîtrise des fo
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/<votre-username>/villanova.git
+git clone https://github.com/anna-mamelli/villanova.git
 cd villanova
 
 # Lancer un serveur HTTP local
@@ -71,7 +71,7 @@ Pour utiliser la **vraie API OpenAgenda** :
 3. Dans `assets/js/api.js`, remplacer la valeur de `API_KEY` :
 
 ```js
-const API_KEY = 'votre-clé-publique';
+const API_KEY = 'la-clé-publique';
 ```
 
 ## Architecture
@@ -147,11 +147,6 @@ Le projet est volontairement frontend pour respecter le brief. Évolutions ident
 3. **Tests automatisés** Playwright (E2E) + Jest (unitaires) en CI
 4. **Critical CSS inline** pour améliorer le First Contentful Paint
 5. **PWA / Service Worker** pour le mode hors-ligne et notifications push
-
-## Documentation
-
-- `JOUR04-defense.md` - dossier de défense détaillé pour le jury Bloc 2
-- Présentations PowerPoint (decks) générés séparément
 
 ## Licence
 
