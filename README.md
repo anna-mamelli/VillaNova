@@ -1,6 +1,6 @@
 # VillaNova
 
-> Plateforme événementielle municipale fictive — projet pédagogique du **Bloc 2 de la certification Développeur Full Stack** (RNCP).
+> Plateforme événementielle municipale fictive - projet pédagogique du **Bloc 2 de la certification Développeur Full Stack** (RNCP).
 
 Centraliser la programmation culturelle d'une ville fictive, dans le respect des standards d'un service public : accessibilité RGAA AA, éco-conception RGESN, sécurité OWASP, RGPD.
 
