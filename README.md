@@ -1,6 +1,6 @@
 # VillaNova
 
-> Plateforme événementielle municipale fictive — projet pédagogique du **Bloc 2 de la certification Développeur Full Stack** (RNCP).
+> Plateforme événementielle municipale fictive - projet pédagogique du **Bloc 2 de la certification Développeur Full Stack** (RNCP).
 
 Centraliser la programmation culturelle d'une ville fictive, dans le respect des standards d'un service public : accessibilité RGAA AA, éco-conception RGESN, sécurité OWASP, RGPD.
 
@@ -46,7 +46,7 @@ Projet **frontend vanilla** (sans framework) pour démontrer la maîtrise des fo
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/<votre-username>/villanova.git
+git clone https://github.com/anna-mamelli/villanova.git
 cd villanova
 
 # Lancer un serveur HTTP local
@@ -71,7 +71,7 @@ Pour utiliser la **vraie API OpenAgenda** :
 3. Dans `assets/js/api.js`, remplacer la valeur de `API_KEY` :
 
 ```js
-const API_KEY = 'votre-clé-publique';
+const API_KEY = 'la-clé-publique';
 ```
 
 ## Architecture
@@ -156,5 +156,9 @@ Projet pédagogique. Code disponible sous licence MIT.
 
 **Anna Mamelli**
 Bachelor ASR - La Plateforme_ Marseille
-Certification Développeur Full Stack — Bloc 2
+<<<<<<< HEAD
+Certification Développeur Full Stack - Bloc 2
+=======
+Certification Développeur Full Stack - Bloc 2
+>>>>>>> 76e12cbc16bbb271a0b0fe9953cc9d6909075004
 Juin 2026
