@@ -26,7 +26,6 @@ Projet **frontend vanilla** (sans framework) pour démontrer la maîtrise des fo
 
 | Axe | Compétence | Où la voir |
 |---|---|---|
-| **Cadrage** | User stories, méthodologie Agile | `JOUR04-defense.md` |
 | **Conception** | Maquettes Lo-Fi → Hi-Fi, design system, modélisation UML | `scss/_variables.scss`, deck |
 | **Front-end** | HTML sémantique, SCSS modulaire, JS ES modules | `index.html`, `scss/`, `assets/js/` |
 | **API** | Multi-agendas OpenAgenda, Promise.all, normalisation | `assets/js/api.js` |
@@ -149,11 +148,6 @@ Le projet est volontairement frontend pour respecter le brief. Évolutions ident
 4. **Critical CSS inline** pour améliorer le First Contentful Paint
 5. **PWA / Service Worker** pour le mode hors-ligne et notifications push
 
-## Documentation
-
-- `JOUR04-defense.md` — dossier de défense détaillé pour le jury Bloc 2
-- Présentations PowerPoint (decks) générés séparément
-
 ## Licence
 
 Projet pédagogique. Code disponible sous licence MIT.
@@ -161,6 +155,6 @@ Projet pédagogique. Code disponible sous licence MIT.
 ## Auteur
 
 **Anna Mamelli**
-Bachelor ASR — La Plateforme_ Marseille
+Bachelor ASR - La Plateforme_ Marseille
 Certification Développeur Full Stack — Bloc 2
 Juin 2026

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   ============================================================================
-  VillaNova — Fiche détaillée d'un événement
+  VillaNova - Fiche détaillée d'un événement
   Bachelor ASR · La Plateforme_ · Jour 02 · Structure HTML sémantique
   Anna Mamelli · Avril 2026
   ============================================================================
@@ -19,13 +19,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Festival des cultures urbaines — VillaNova</title>
+  <title>Festival des cultures urbaines - VillaNova</title>
   <meta name="description" content="Trois jours pour célébrer les cultures urbaines au Vieux-Port de VillaNova : musique, danse, arts visuels et débats. Du 26 au 28 avril 2026. Gratuit.">
   <meta name="theme-color" content="#5B21B6">
 
   <!--
     Open Graph enrichi pour le partage social.
-    L'image og:image doit être présente — c'est ce qui s'affiche quand
+    L'image og:image doit être présente - c'est ce qui s'affiche quand
     quelqu'un partage le lien sur LinkedIn, Facebook, WhatsApp.
   -->
   <meta property="og:type" content="event">
@@ -62,7 +62,7 @@
   <a href="#contenu-principal" class="skip-link">Aller au contenu principal</a>
 
   <!-- ====================================================================
-       HEADER — Identique à l'index pour cohérence inter-pages
+       HEADER - Identique à l'index pour cohérence inter-pages
        (À factoriser dans un partial Twig/Handlebars/include PHP)
        ==================================================================== -->
   <header role="banner">
@@ -113,7 +113,7 @@
   </nav>
 
   <!-- ====================================================================
-       MAIN — La fiche événement entière est un seul gros <article>
+       MAIN - La fiche événement entière est un seul gros <article>
        avec microdata schema.org/Event.
 
        Pourquoi <article> et pas <section> ?
@@ -146,7 +146,7 @@
         <h1 itemprop="name">Festival des cultures urbaines</h1>
 
         <!--
-          IMAGE DE COUVERTURE — éco-conception complète
+          IMAGE DE COUVERTURE - éco-conception complète
 
           Particularité ici : l'image est en haut de page (above-the-fold),
           donc loading="eager" (pas de lazy) car elle doit s'afficher tout
@@ -660,7 +660,7 @@
   </main>
 
   <!-- ====================================================================
-       ASIDE — Événements similaires
+       ASIDE - Événements similaires
        Position après <main> dans le DOM (et donc après dans l'arbre
        d'accessibilité), même si visuellement le CSS pourra le placer
        en sidebar à droite.

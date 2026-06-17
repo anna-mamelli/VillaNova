@@ -6,8 +6,6 @@
   Anna Mamelli · Avril 2026
   ============================================================================
 
-  Choix techniques documentés ici pour faciliter la défense orale :
-
   - DOCTYPE html5 minimal (5 caractères au lieu des 31 du XHTML 1.0 Strict)
     → 1 octet économisé par chargement × N visiteurs = bénéfice éco mesurable
   - lang="fr" : indispensable pour les lecteurs d'écran et la prononciation
@@ -105,13 +103,13 @@
   </header>
 
   <!-- ====================================================================
-       MAIN — Contenu principal unique de la page (un seul <main> par page)
+       MAIN - Contenu principal unique de la page (un seul <main> par page)
        L'attribut id correspond à la cible du skip-link.
        ==================================================================== -->
   <main id="contenu-principal" role="main">
 
     <!-- ----------------------------------------------------------------
-         HERO — Section d'introduction
+         HERO - Section d'introduction
          h1 unique de la page (critère RGAA 9.1.1)
          ---------------------------------------------------------------- -->
     <section aria-labelledby="titre-hero">
@@ -174,7 +172,7 @@
     <!-- ----------------------------------------------------------------
          FILTRES PAR CATÉGORIE
          <nav> secondaire avec aria-label distinct.
-         Chaque lien filtre la liste — au Jour 04 (JS) ces liens
+         Chaque lien filtre la liste - au Jour 04 (JS) ces liens
          deviendront des boutons interactifs.
          ---------------------------------------------------------------- -->
     <nav aria-label="Filtrer par catégorie">
@@ -190,7 +188,7 @@
     </nav>
 
     <!-- ----------------------------------------------------------------
-         À LA UNE — Événement vedette
+         À LA UNE - Événement vedette
          <article> car c'est un contenu autonome et réutilisable
          (pourrait être syndiqué via flux RSS ou repris ailleurs).
          Microdata schema.org/Event : enrichit le SEO et permet aux
@@ -217,7 +215,7 @@
         </header>
 
         <!--
-          ÉCO-CONCEPTION DES IMAGES - point pédagogique majeur du Jour 02
+          ÉCO-CONCEPTION DES IMAGES - point majeur du Jour 02
 
           La balise <picture> permet de servir la version la plus adaptée
           de l'image au navigateur de l'utilisateur :
