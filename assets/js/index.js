@@ -103,7 +103,7 @@ function normalizeStr(str) {
  * Renvoie true si l'événement correspond à la catégorie sélectionnée.
  *
  * IMPORTANT : on splitte les keywords en mots et on compare mot à mot
- * pour éviter les faux positifs du substring matching.
+ * pour éviter les faux positifs.
  *
  * Exemple du piège évité :
  *   'photographie'.includes('rap')  → true  (à cause de "g-r-a-p" dans le mot)
@@ -175,7 +175,7 @@ async function renderFeatured() {
     }
 
     // Mettre à jour les zones du HTML existant (on ne reconstruit pas tout
-    // pour préserver le squelette CSS — on remplit juste les blanks)
+    // pour préserver le squelette CSS - on remplit juste les blanks)
     const article = selectors.featuredContainer;
     const detailUrl = `event-detail.html?id=${encodeURIComponent(featured.uid)}`;
 

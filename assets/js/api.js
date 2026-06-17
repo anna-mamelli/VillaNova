@@ -294,7 +294,7 @@ export function normalizeEvent(raw) {
 /**
  * Récupère la liste des événements.
  * En mode DÉMO, utilise sample-data.js. En mode RÉEL, appelle OpenAgenda
- * — sur TOUS les agendas configurés en parallèle, puis fusionne et trie.
+ * - sur TOUS les agendas configurés en parallèle, puis fusionne et trie.
  */
 export async function fetchEvents({
   size = API_CONFIG.pageSize,
