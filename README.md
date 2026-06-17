@@ -156,9 +156,5 @@ Projet pédagogique. Code disponible sous licence MIT.
 
 **Anna Mamelli**
 Bachelor ASR - La Plateforme_ Marseille
-<<<<<<< HEAD
 Certification Développeur Full Stack - Bloc 2
-=======
-Certification Développeur Full Stack - Bloc 2
->>>>>>> 76e12cbc16bbb271a0b0fe9953cc9d6909075004
 Juin 2026
